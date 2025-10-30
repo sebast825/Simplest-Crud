@@ -4,16 +4,11 @@ import jwt, { SignOptions, Algorithm } from 'jsonwebtoken';
 class JwtService{
 
 private readonly jwtSecret: string;
-private readonly jwtExpiresIn: string;
-private readonly jwtAlgorithm: string;
+
 
      constructor() {
-    // Verificar que el secret tenga longitud mínima segura
     this.jwtSecret = "mi-clave-secreta-super-segura";
   
-    
-    this.jwtExpiresIn = '15m';
-    this.jwtAlgorithm = 'HS256';
   }
 
     public generateToken(userPayload:number) {
