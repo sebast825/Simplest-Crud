@@ -1,4 +1,5 @@
 import { AuthRequestDto } from "../dto/auth/authRequestDto.types";
+import { comparePassword, hashPassword } from "../helpers/hashPasswords";
 
 const { connectDB, sql } = require("../config/database.ts");
 
@@ -18,7 +19,7 @@ class UserService {
     `);
 
       const user = result.recordset[0];
-    if(loginDto.password == user.password){
+    if(await comparePassword(loginDto.password, user.password)){
       return user.id;
 
     }else{
