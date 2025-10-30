@@ -2,7 +2,7 @@
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import  {BrowserRouter}  from 'react-router-dom';
-import { AppRoutes } from './routes/AppRoutes';
+import { AppRoutes } from './routes/appRoutes';
 
 function App() {
 
