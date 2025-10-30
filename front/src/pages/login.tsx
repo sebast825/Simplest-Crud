@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
-  const { login } = useAuth();
+  const { login, error ,setError} = useAuth();
   const navigate = useNavigate();
-  navigate("/dashboard");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    await login("jua2an@email.com", "miPaassword123");
+    await login(email, password);
   }
+    useEffect(() => {
+    if (error) {
+      alert("Usuario o contraseña incorrectos");
+    }
+    setError(false);
+    
+  }, [error]);
+
   return (
     <>
       <Row className=" justify-content-center align-items-center vh-100 vw-100 ">
@@ -52,7 +60,13 @@ function Login() {
             </div>
           </Form>
           <div className="mt-2 d-flex flex-column border-top pt-3">
-            <Button onClick={() => {navigate("/register")}} variant="secondary" type="submit">
+            <Button
+              onClick={() => {
+                navigate("/register");
+              }}
+              variant="secondary"
+              type="submit"
+            >
               Crear Usuario
             </Button>
           </div>
