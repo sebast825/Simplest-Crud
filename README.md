@@ -4,8 +4,10 @@ Esta aplicación es un sistema web fullstack desarrollado con React y Typescript
 
 ## Run App
 ```bash
+
 ## Run the back end
 cd back
+create .env file with required informaiton follow .env.example
 npm install
 npm run dev
 
