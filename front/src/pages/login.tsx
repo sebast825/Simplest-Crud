@@ -52,7 +52,7 @@ function Login() {
             </div>
           </Form>
           <div className="mt-2 d-flex flex-column border-top pt-3">
-            <Button onClick={() => {}} variant="secondary" type="submit">
+            <Button onClick={() => {navigate("/register")}} variant="secondary" type="submit">
               Crear Usuario
             </Button>
           </div>
