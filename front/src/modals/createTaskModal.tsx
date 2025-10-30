@@ -13,7 +13,9 @@ export const CreateTaskModal = ({ onCreate }: ICreateTaskModal) => {
   const handleShow = () => setShow(true);
 
   const handleCreate = () => {
-    if (title.trim() === "") return; 
+    if (title.trim() === "") {
+      alert("El título no puede estar vacío");
+      return}; 
     onCreate(title);
     setTitle("");
     handleClose();
