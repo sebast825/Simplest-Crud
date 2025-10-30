@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/useRegister";
 
 function Register() {
-  const {register} =  useRegister()
+  const { register } = useRegister();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -14,19 +14,38 @@ function Register() {
 
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (password !== passwordRepeat) {
-      alert("Las contraseñas no coinciden");
-      return;
-    }
-     if (!userName) {
-      alert("El nombre de usuario es obligatorio");
-      return;
-    }
+    if (!validateUser()) return;
+
     await register(email, password, userName);
     alert("Usuario creado con éxito");
-
     navigate("/");
   }
+
+  function validateUser(): boolean {
+    if (password !== passwordRepeat) {
+      alert("Las contraseñas no coinciden");
+      return false; // retorna false si falla
+    }
+ if (!password  ) {
+      alert("Las contraseñas no pueden estar vacia");
+      return false; // retorna false si falla
+    }
+    if (!userName) {
+      alert("El nombre de usuario es obligatorio");
+      return false;
+    }
+
+    if (!validateEmail(email)) {
+      alert("El email de usuario es inválido");
+      return false;
+    }
+
+    return true; // todo bien
+  }
+  const validateEmail = (email: string): boolean => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
   return (
     <>
       <Row className=" justify-content-center align-items-center vh-100 vw-100 ">
@@ -44,7 +63,7 @@ function Register() {
               />
             </Form.Group>
             <Form.Group controlId="formBasicNombre">
-                            <Form.Label className="fw-bold"></Form.Label>
+              <Form.Label className="fw-bold"></Form.Label>
 
               <Form.Control
                 type="text"
