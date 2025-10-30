@@ -8,7 +8,7 @@ class TaskController {
 
   getTasksByUser = async (req: Request, res: Response): Promise<void> => {
     try {
-      const { userId } = req.params;
+      const userId = (req as any).userId; // comes from the token
 
       if (!userId) {
         res.status(400).json({ error: "user Id is required" });
