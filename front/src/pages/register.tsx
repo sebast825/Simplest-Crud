@@ -17,8 +17,7 @@ function Register() {
     if (!validateUser()) return;
 
     await register(email, password, userName);
-    alert("Usuario creado con éxito");
-    navigate("/");
+    
   }
 
   function validateUser(): boolean {
