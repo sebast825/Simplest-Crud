@@ -38,6 +38,20 @@ export const useTasks = () => {
       setLoading(false);
     }
   };
+  const deleteTask = async (taskId: number) => {
+    try {
+      console.log("aca", taskId);
 
-  return { tasks, loading, updateTaskStatus };
+       await apiClient.delete("/task/" + taskId);
+
+      setTasks(prevTasks => prevTasks.filter(t => t.id !== taskId));
+
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { tasks, loading, updateTaskStatus,deleteTask };
 };
