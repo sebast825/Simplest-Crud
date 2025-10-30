@@ -26,11 +26,11 @@ class AuthController {
         });   
         res.status(200).json({ message: "Login successful"});
      }else{
-      res.status(500).json({ error: "Error during login"});
+      res.status(500).json({  error: "Invalid Credentials"});
      }
     } catch (error) {
       console.log("Error in login:", error);
-      res.status(500).json({ error: (error as Error).message });
+      res.status(500).json({ error: "Invalid Credentials"});
     }
   }
 }
