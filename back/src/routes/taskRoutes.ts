@@ -3,8 +3,9 @@ import TaskController from "../controllers/taskController";
 import { taskService } from "../services/taskService";
 
 const router = Router();
-const authController = new TaskController(taskService);
+const taskController = new TaskController(taskService);
 
-router.get("/task/user/:userId",  authController.getTasksByUser);
+router.get("/task/user/:userId",  taskController.getTasksByUser);
+router.patch("/task/:taskId",  taskController.updateTaskStatus);
 
 module.exports = router; 
