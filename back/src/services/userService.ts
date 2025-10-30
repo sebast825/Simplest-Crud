@@ -26,7 +26,7 @@ class UserService {
 
       const userResponse : UserResponseDto ={
         name: dbUser.name,
-        email: dbUser.email
+        id: dbUser.id
       }
       return userResponse;
     } catch (error: any) {
@@ -35,7 +35,7 @@ class UserService {
       throw error; // Re-lanzas para que el controller lo maneje
     }
    }
-   public async emailPasswordMatch(loginDto :AuthRequestDto) : Promise<number> {
+   public async emailPasswordMatch(loginDto :AuthRequestDto) : Promise<UserResponseDto> {
 
       try {
     const pool = await connectDB();
@@ -43,14 +43,20 @@ class UserService {
   const result = await request
     .input("email", sql.NVarChar, loginDto.email)
     .query(`
-      SELECT id, password
+      SELECT id, password,name
       FROM users
       WHERE email = @email 
     `);
 
-      const user = result.recordset[0];
-    if(await comparePassword(loginDto.password, user.password)){
-      return user.id;
+      const dbUser = result.recordset[0];
+    
+    if(await comparePassword(loginDto.password, dbUser.password)){
+         const userResponse : UserResponseDto ={
+        name: dbUser.name,
+        id: dbUser.id
+      }
+    return userResponse;
+    
 
     }else{
     throw new Error("Invalid email or password");

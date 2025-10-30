@@ -16,7 +16,7 @@ class AuthController {
       }
       const rsta = await this.userService.emailPasswordMatch(loginData);
      if (rsta) {
-        const token = this.jwtService.generateToken(rsta);
+        const token = this.jwtService.generateToken(rsta.id);
  
         res.cookie('token', token, {
           httpOnly: true,
@@ -24,7 +24,7 @@ class AuthController {
           sameSite: 'strict',
           maxAge: 60 * 60 * 1000 // 1 hour
         });   
-        res.status(200).json({ message: "Login successful"});
+        res.status(200).json({ message: "Login successful", user : rsta});
      }else{
       res.status(500).json({  error: "Invalid Credentials"});
      }
