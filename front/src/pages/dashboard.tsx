@@ -1,12 +1,20 @@
 import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useTasks } from "../hooks/useTasks";
 import CreateTaskModal from "../modals/createTaskModal";
+import { useAuth } from "../hooks/useAuth";
 
 function Dashboard() {
+     const { user } = useAuth();
+   
   const { loading, tasks, updateTaskStatus, deleteTask,createTask } = useTasks();
   if (loading) return <p>Cargando tareas...</p>;
 
   return (
+   <>
+   
+   <div>
+      <h1>Bienvenido {user}</h1>
+   </div>
     <Row className=" justify-content-center align-items-center  vw-100 ">
       <Container className="mt-4 ">
         <Row className="mb-3 align-items-center">
@@ -58,6 +66,7 @@ function Dashboard() {
         </ListGroup>
       </Container>
     </Row>
+       </>
   );
 }
 

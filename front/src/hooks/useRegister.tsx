@@ -4,11 +4,12 @@ import apiClient from '../api/client';
 export const useRegister = () => {
   
 
-  const register = async (email: string, password: string) => {
+  const register = async (email: string, password: string, userName: string) => {
   try {
       const response = await apiClient.post('/register', {
         email,
-        password
+        password,
+        name: userName
       });
       console.log('Login successful:', response.data);
     } catch (error) {
