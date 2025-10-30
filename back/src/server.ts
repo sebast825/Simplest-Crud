@@ -1,6 +1,8 @@
 const express = require('express');
 const healthRoutes = require('./routes/healthRoutes');
 const authRoutes = require('./routes/authRoutes');
+const taskRoutes = require('./routes/taskRoutes');
+
 import cors from 'cors';
 
 
@@ -16,6 +18,7 @@ app.use(cors({
 
 app.use('/api', healthRoutes);
 app.use('/api', authRoutes);
+app.use('/api', taskRoutes);
 
 
 
