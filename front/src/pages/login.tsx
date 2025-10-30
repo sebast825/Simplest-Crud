@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Button, Col, Form, Row } from "react-bootstrap";
+import { useAuth } from "../hooks/useAuth";
 
 function Login() {
+  const {login}= useAuth();
 
    const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
+  async function  handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
    e.preventDefault();
-   console.log("Email:", email);
-   console.log("Password:", password);
+       await login("jua2an@email.com", "miPaassword123");
+
   }
    return (
    
