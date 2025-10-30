@@ -1,13 +1,16 @@
 
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Login from './pages/login';
+import  {BrowserRouter}  from 'react-router-dom';
+import { AppRoutes } from './routes/AppRoutes';
 
 function App() {
 
   return (
     <>
-    <Login></Login>
+     <BrowserRouter>
+    <AppRoutes />
+  </BrowserRouter>
     </>
   )
 }
