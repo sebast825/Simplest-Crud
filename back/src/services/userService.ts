@@ -9,9 +9,8 @@ class UserService {
   public async create(userDto: UserCreateRequestDto): Promise<UserResponseDto> {
     try {
       const pool = await connectDB();
-      const request = pool.request();
-
-      const checkEmail = await request
+      const checkRequest = pool.request();
+      const checkEmail = await checkRequest
         .input("email", sql.NVarChar, userDto.email)
         .query("SELECT id FROM users WHERE email = @email");
 
@@ -19,6 +18,8 @@ class UserService {
         throw new Error("El email ya está registrado");
       }
       var hashPass: string = await hashPassword(userDto.password);
+      const request = pool.request();
+
       const result = await request
         .input("name", sql.NVarChar, userDto.name)
         .input("email", sql.NVarChar, userDto.email)
