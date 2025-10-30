@@ -35,6 +35,23 @@ class TaskService {
       throw error;
     }
   }
+  public async deleteTask(taskId: number) {
+  try {
+    const pool = await connectDB();
+    const result = await pool
+      .request()
+      .input("taskId", sql.Int, taskId)
+      .query(
+        "DELETE FROM tasks OUTPUT deleted.* WHERE id = @taskId"
+      );
+
+    return result.recordset[0];
+  } catch (error) {
+    console.error("Error deleting task:", error);
+    throw error;
+  }
+}
+
 }
 
 export const taskService = new TaskService();
