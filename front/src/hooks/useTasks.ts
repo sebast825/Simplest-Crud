@@ -12,7 +12,7 @@ export const useTasks = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await apiClient.get("/task/user/14");
+      const response = await apiClient.get("/task/user");
       const data = response.data;
       setTasks(data.tasks);
       console.log(data.tasks);
