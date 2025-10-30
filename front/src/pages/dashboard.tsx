@@ -21,7 +21,9 @@ function Dashboard() {
         </Row>
 
         <ListGroup>
-          {tasks.map((task) => (
+          {tasks
+           .sort((a, b) => Number(a.done) - Number(b.done))
+          .map((task) => (
             <ListGroup.Item
               key={task.id}
               variant={task.done ? "success" : ""}
