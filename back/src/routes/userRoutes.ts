@@ -5,7 +5,7 @@ import { userService } from "../services/userService";
 const router = Router();
 const userController = new UserController(userService);
 
-router.post("/users", userController.create);
+router.post("/register", userController.create);
 
 
 module.exports = router; 

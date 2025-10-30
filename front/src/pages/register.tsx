@@ -4,20 +4,22 @@ import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 function Register() {
-  const {  } = useAuth();
+  const {} = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-    const [passwordRepeat, setPasswordRepeat] = useState("");
+  const [passwordRepeat, setPasswordRepeat] = useState("");
 
   async function handleSubmit(e: React.FormEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if(password !== passwordRepeat){
+    if (password !== passwordRepeat) {
       alert("Las contraseñas no coinciden");
       return;
     }
-    
+    alert("Usuario creado con éxito");
+
+    navigate("/");
   }
   return (
     <>
@@ -46,7 +48,7 @@ function Register() {
                 className="p-2"
               />
             </Form.Group>
-            
+
             <Form.Group controlId="formBasicPassword">
               <Form.Label className=""></Form.Label>
               <Form.Control
@@ -69,7 +71,11 @@ function Register() {
             </div>
           </Form>
           <div className="mt-2 d-flex flex-column border-top pt-3">
-            <Button onClick={ ()=> navigate("/")} variant="secondary" type="submit">
+            <Button
+              onClick={() => navigate("/")}
+              variant="secondary"
+              type="submit"
+            >
               Volver
             </Button>
           </div>
