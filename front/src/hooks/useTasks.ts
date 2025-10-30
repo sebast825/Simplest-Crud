@@ -52,6 +52,19 @@ export const useTasks = () => {
       setLoading(false);
     }
   };
+  const createTask = async (title: string) => {
+    try {
 
-  return { tasks, loading, updateTaskStatus,deleteTask };
+      var rsta =  await apiClient.post("/task/",{title});
+
+    setTasks(prevTasks => [ rsta.data.tasks,...prevTasks]);
+
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { tasks, loading, updateTaskStatus,deleteTask,createTask };
 };

@@ -1,8 +1,9 @@
 import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useTasks } from "../hooks/useTasks";
+import CreateTaskModal from "../modals/createTaskModal";
 
 function Dashboard() {
-  const { loading, tasks, updateTaskStatus, deleteTask } = useTasks();
+  const { loading, tasks, updateTaskStatus, deleteTask,createTask } = useTasks();
   if (loading) return <p>Cargando tareas...</p>;
 
   return (
@@ -13,7 +14,9 @@ function Dashboard() {
             <h2>Mis tareas</h2>
           </Col>
           <Col className="text-end">
-            <Button variant="primary">+ Nueva tarea</Button>
+            <CreateTaskModal
+              onCreate={(title)=>createTask(title)}
+            />{" "}
           </Col>
         </Row>
 
