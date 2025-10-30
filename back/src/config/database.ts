@@ -20,7 +20,7 @@ let pool : sql.ConnectionPool| null = null;;
 const connectDB  = async (): Promise<sql.ConnectionPool>   => {
     if (!pool) {
         pool = await sql.connect(dbConfig);
-        console.log('✅ Conectado a SQL Server');
+        console.log('Conected to SQL Server');
     }
     return pool;
 };
