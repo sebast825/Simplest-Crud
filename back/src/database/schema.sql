@@ -1,0 +1,16 @@
+CREATE TABLE users (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL,
+    email NVARCHAR(255) NOT NULL,
+    password NVARCHAR(255) NOT NULL, 
+    creationDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE tasks (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    title NVARCHAR(255) NOT NULL,
+    done BIT DEFAULT 0,
+    userId INT NULL,
+    createdAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_tasks_users FOREIGN KEY (userId) REFERENCES users(id)
+);
