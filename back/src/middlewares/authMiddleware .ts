@@ -7,13 +7,15 @@ export const authMiddleware = (
   next: NextFunction
 ) => {
   try {
-    const authHeader = req.cookies.token;
+    const token = req.cookies.token;
 
-    if (!authHeader) {
+    if (!token) {
       return res.status(401).json({ error: "Token required" });
     }
 
-    jwtService.verifyToken(authHeader);
+    const decoded = jwtService.verifyToken(token);
+    //save the user id in the request object
+    (req as any).userId = decoded.userId;
 
     next();
   } catch (error) {

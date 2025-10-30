@@ -54,13 +54,14 @@ class TaskController {
   };
   createTask = async (req: Request, res: Response): Promise<void> => {
     try {
-          const body: TaskcreateRequestDto = req.body;
+          const  { title }  = req.body;
+          const userId = (req as any).userId; // comes from the token
 
-      if (!body.userId || !body.title) {
+      if (!userId || !title) {
         res.status(400).json({ error: "User Id and title is required" });
         return;
       }
-      var rsta = await this.taskService.createTask(body.title,body.userId);
+      var rsta = await this.taskService.createTask(title,userId);
 
       res.status(200).json({ tasks: rsta });
     } catch (error) {
