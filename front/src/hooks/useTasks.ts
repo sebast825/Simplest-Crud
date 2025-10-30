@@ -7,22 +7,37 @@ export const useTasks = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      try {
-         const response = await apiClient.get("/task/user/14");
-        const data =  response.data;
-        setTasks(data.tasks);
-        console.log(data.tasks);
-      } catch (error) {
-        console.error("Error fetching tasks:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchTasks();
   }, []);
 
-  return { tasks, loading };
+  const fetchTasks = async () => {
+    try {
+      const response = await apiClient.get("/task/user/14");
+      const data = response.data;
+      setTasks(data.tasks);
+      console.log(data.tasks);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  const updateTaskStatus = async (taskId: number) => {
+    try {
+      console.log("aca", taskId);
 
-}
+      const response = await apiClient.patch("/task/" + taskId);
+      const updatedTask = response.data.tasks;
+
+      setTasks((prevTasks) =>
+        prevTasks.map((t) => (t.id === taskId ? updatedTask : t))
+      );
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { tasks, loading, updateTaskStatus };
+};

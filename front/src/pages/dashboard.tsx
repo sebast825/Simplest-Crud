@@ -4,7 +4,7 @@ import   {useTasks}  from "../hooks/useTasks";
 
 function Dashboard() {
 
-   const {loading,tasks}= useTasks();
+   const {loading,tasks,updateTaskStatus}= useTasks();
 if (loading) return <p>Cargando tareas...</p>;
 
   return   (
@@ -40,6 +40,8 @@ if (loading) return <p>Cargando tareas...</p>;
               <Button
                 size="sm"
                 variant={task.done ? "warning" : "success"}
+                  onClick={() => updateTaskStatus(task.id)}
+
               >
                 {task.done ? "Marcar pendiente" : "Marcar hecha"}
               </Button>
