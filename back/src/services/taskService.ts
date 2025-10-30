@@ -28,7 +28,6 @@ class TaskService {
           "UPDATE tasks SET done = CASE WHEN done = 1 THEN 0 ELSE 1 END OUTPUT inserted.* WHERE id = @taskId"
         );
 
-  
       return result.recordset[0];
     } catch (error) {
       console.error("Error updating task:", error);
@@ -36,22 +35,37 @@ class TaskService {
     }
   }
   public async deleteTask(taskId: number) {
-  try {
-    const pool = await connectDB();
-    const result = await pool
-      .request()
-      .input("taskId", sql.Int, taskId)
-      .query(
-        "DELETE FROM tasks OUTPUT deleted.* WHERE id = @taskId"
-      );
+    try {
+      const pool = await connectDB();
+      const result = await pool
+        .request()
+        .input("taskId", sql.Int, taskId)
+        .query("DELETE FROM tasks OUTPUT deleted.* WHERE id = @taskId");
 
-    return result.recordset[0];
-  } catch (error) {
-    console.error("Error deleting task:", error);
-    throw error;
+      return result.recordset[0];
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      throw error;
+    }
   }
-}
 
+  public async createTask(title: string, userId: number) {
+    try {
+      const pool = await connectDB();
+      const result = await pool
+        .request()
+        .input("title", sql.NVarChar, title)
+        .input("userId", sql.Int, userId)
+        .query(
+          "INSERT INTO tasks (title, done, userId) OUTPUT inserted.* VALUES (@title, 0, @userId)"
+        );
+
+      return result.recordset[0]; // devuelve la tarea recién creada
+    } catch (error) {
+      console.error("Error creating task:", error);
+      throw error;
+    }
+  }
 }
 
 export const taskService = new TaskService();

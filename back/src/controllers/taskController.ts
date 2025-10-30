@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import TaskService from "../services/taskService";
-const { connectDB, sql } = require("../config/database.ts");
+import { TaskcreateRequestDto } from "../dto/task/taskCreateRequestDto.types";
+
 
 class TaskController {
   constructor(private taskService: TaskService) {}
@@ -51,7 +52,22 @@ class TaskController {
       res.status(500).json({ error: (error as Error).message });
     }
   };
+  createTask = async (req: Request, res: Response): Promise<void> => {
+    try {
+          const body: TaskcreateRequestDto = req.body;
 
+      if (!body.userId || !body.title) {
+        res.status(400).json({ error: "User Id and title is required" });
+        return;
+      }
+      var rsta = await this.taskService.createTask(body.title,body.userId);
+
+      res.status(200).json({ tasks: rsta });
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+      res.status(500).json({ error: (error as Error).message });
+    }
+  };
   
 }
 
