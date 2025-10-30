@@ -2,6 +2,41 @@
 
 Esta aplicación es un sistema web fullstack desarrollado con React y Typescript en el frontend y Node.js, Express y Typescript  en el backend, conectado a una base de datos SQL Server. Permite a los usuarios registrarse, iniciar sesión y gestionar tareas a través de un CRUD protegido con autenticación mediante tokens JWT.
 
+## Run App
+```bash
+## Run the back end
+cd back
+npm install
+npm run dev
+
+## Run the front end
+cd front
+npm install
+npm run dev
+```
+
+## Backup de la base de datos
+
+```sql
+CREATE TABLE users (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    name NVARCHAR(100) NOT NULL,
+    email NVARCHAR(255) NOT NULL,
+    password NVARCHAR(255) NOT NULL, 
+    creationDate DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE tasks (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    title NVARCHAR(255) NOT NULL,
+    done BIT DEFAULT 0,
+    userId INT NULL,
+    createdAt DATETIME DEFAULT GETDATE(),
+    CONSTRAINT FK_tasks_users FOREIGN KEY (userId) REFERENCES users(id)
+);
+
+```
+
 ## Funcionalidades principales
 - Registro y login de usuarios con autenticación segura.
 - CRUD de tareas accesible solo para usuarios autenticados.
@@ -61,3 +96,6 @@ SIMPLSET/
 │ └─ README.md
 
 ```
+
+
+
