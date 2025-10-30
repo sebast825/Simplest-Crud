@@ -1,10 +1,12 @@
 import { Request, Response } from "express";
 import { AuthRequestDto } from "../dto/auth/authRequestDto.types";
 import UserService from "../services/userService";
+import JwtService from "../services/jwtService";
 
 class AuthController {
   constructor(
     private userService: UserService,
+     private jwtService: JwtService
   ) {}
    login = async(req: Request, res: Response): Promise<void> =>{
     try {
@@ -13,9 +15,19 @@ class AuthController {
         res.status(400).json({ error: "Missing required fields" });
       }
       const rsta = await this.userService.emailPasswordMatch(loginData);
-      if (rsta != null) {      
+     if (rsta) {
+        const token = this.jwtService.generateToken(rsta);
+ 
+        res.cookie('token', token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: 'strict',
+          maxAge: 60 * 60 * 1000 // 1 hour
+        });   
         res.status(200).json({ message: "Login successful"});
-      }
+     }else{
+      res.status(500).json({ error: "Error during login"});
+     }
     } catch (error) {
       console.log("Error in login:", error);
       res.status(500).json({ error: (error as Error).message });
