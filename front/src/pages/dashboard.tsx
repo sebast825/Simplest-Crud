@@ -1,19 +1,20 @@
 import { Button,  Col, Container, ListGroup, Row } from "react-bootstrap";
 import { useTasks } from "../hooks/useTasks";
 import CreateTaskModal from "../modals/createTaskModal";
+import { useLocation } from 'react-router-dom';
 
 function Dashboard() {
-   
   const { loading, tasks, updateTaskStatus, deleteTask,createTask } = useTasks();
   if (loading) return <p>Cargando tareas...</p>;
-
+  const location = useLocation();
+  const user = location.state?.user;
 
   return (
    <>
    <div className="vw-100 vh-100 p-5">
 <Container fluid className="bg-primary text-white text-center py-5 rounded-3 mb-4">
       <h1 className="fw-bold">
-        Bienvenido!
+        Bienvenido {user?.name}!
       </h1>
     </Container>
     <Row className="d-flex justify-content-center align-items-center ">

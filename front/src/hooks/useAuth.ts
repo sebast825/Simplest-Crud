@@ -1,23 +1,30 @@
 // src/hooks/useAuth.ts
-import {   useState } from 'react';
+import {   useEffect, useState } from 'react';
 import apiClient from '../api/client';
 import { useNavigate } from 'react-router-dom';
+import type { LoginResponse } from '../types/loginResponse.types';
+import type { User } from '../types/user.types';
+
+
 
 export const useAuth = () => {
   
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User | undefined>(undefined);
   const [error, setError] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(()=>{console.log("user " + user)},[user])
   const login = async (email: string, password: string) => {
   try {
       const response = await apiClient.post('/login', {
         email,
         password
       });
-      setUser(response.data.user);
-      console.log('Login successful:', response.data);
-            navigate("/dashboard");
+      const data : LoginResponse = response.data;
+      setUser(data.user);
+        navigate("/dashboard", { 
+        state: { user: response.data.user } 
+      });
 
     } catch (error) {
       setError(true);
