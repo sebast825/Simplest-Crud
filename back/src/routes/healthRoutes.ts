@@ -32,4 +32,4 @@ router.get('/health',(req : Request, res: Response) => {
   });
 });
 
-module.exports = router; 
+export {router as healthRoutes}; 

@@ -1,9 +1,8 @@
-const express = require('express');
-const healthRoutes = require('./routes/healthRoutes');
-const authRoutes = require('./routes/authRoutes');
-const taskRoutes = require('./routes/taskRoutes');
-const userRoutes = require('./routes/userRoutes');
-
+import express from 'express';
+import {authRoutes} from './routes/authRoutes';
+import {healthRoutes} from './routes/healthRoutes';
+import {taskRoutes} from './routes/taskRoutes';
+import {userRoutes} from './routes/userRoutes';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
@@ -23,8 +22,6 @@ app.use('/api', healthRoutes);
 app.use('/api', authRoutes);
 app.use('/api', taskRoutes);
 app.use('/api', userRoutes);
-
-
 
 
 const PORT = 3000;

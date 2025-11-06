@@ -11,4 +11,4 @@ router.patch("/task/:taskId",  authMiddleware,taskController.updateTaskStatus);
 router.delete("/task/:taskId", authMiddleware, taskController.deleteTask);
 router.post("/task", authMiddleware, taskController.createTask);
 
-module.exports = router; 
+export  {router as taskRoutes}; 

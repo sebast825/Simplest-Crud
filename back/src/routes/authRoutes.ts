@@ -10,4 +10,4 @@ const authController = new AuthController(userService,jwtService);
 
 router.post("/login",  authController.login);
 
-module.exports = router; 
+export { router as authRoutes }; 

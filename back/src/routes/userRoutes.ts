@@ -8,4 +8,4 @@ const userController = new UserController(userService);
 router.post("/register", userController.create);
 
 
-module.exports = router; 
+export  {router as userRoutes}; 
