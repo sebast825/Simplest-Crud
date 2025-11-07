@@ -16,7 +16,7 @@ export const useAuth = () => {
   useEffect(()=>{console.log("user " + user)},[user])
   const login = async (email: string, password: string) => {
   try {
-      const response = await apiClient.post('/login', {
+      const response = await apiClient.post('/auth/login', {
         email,
         password
       });

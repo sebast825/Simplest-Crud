@@ -8,7 +8,7 @@ export const useRegister = () => {
 
   const register = async (email: string, password: string, userName: string) => {
   try {
-      const response = await apiClient.post('/register', {
+      const response = await apiClient.post('/auth/register', {
         email,
         password,
         name: userName
