@@ -8,9 +8,9 @@ class TaskController {
   getTasksByUser = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const userId = (req as any).userId; // comes from the token
-      var rsta = await this.taskService.getTasksByUser(userId);
+      var tasks = await this.taskService.getTasksByUser(userId);
 
-      res.status(200).json({ tasks: rsta });
+      res.status(200).json(tasks);
     }
   );
 

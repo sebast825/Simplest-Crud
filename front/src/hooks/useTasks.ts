@@ -13,9 +13,7 @@ export const useTasks = () => {
   const fetchTasks = async () => {
     try {
       const response = await apiClient.get("/tasks/user");
-      const data = response.data;
-      setTasks(data.tasks);
-      console.log(data.tasks);
+      setTasks(response.data);
     } catch (error) {
       console.error("Error fetching tasks:", error);
     } finally {
@@ -24,10 +22,9 @@ export const useTasks = () => {
   };
   const updateTaskStatus = async (taskId: number) => {
     try {
-      console.log("aca", taskId);
 
       const response = await apiClient.patch("/tasks/" + taskId);
-      const updatedTask = response.data.tasks;
+      const updatedTask = response.data;
 
       setTasks((prevTasks) =>
         prevTasks.map((t) => (t.id === taskId ? updatedTask : t))
@@ -40,7 +37,6 @@ export const useTasks = () => {
   };
   const deleteTask = async (taskId: number) => {
     try {
-      console.log("aca", taskId);
 
        await apiClient.delete("/tasks/" + taskId);
 
