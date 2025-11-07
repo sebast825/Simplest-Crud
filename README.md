@@ -55,9 +55,8 @@ CREATE TABLE tasks (
 
 ## Estructura de Proyecto
 ```bash
-SIMPLSET/
+Project/
 ├─ back/
-│ ├─ node_modules/
 │ ├─ src/
 │ │ ├─ config/
 │ │ ├─ controllers/
@@ -65,18 +64,16 @@ SIMPLSET/
 │ │ ├─ dto/
 │ │ ├─ helpers/
 │ │ ├─ middlewares/
+│ │ ├─ repositories/
 │ │ ├─ routes/
 │ │ ├─ services/
 │ │ └─ server.ts
-│ ├─ .env
 │ ├─ .env.Example
 │ ├─ .gitignore
 │ ├─ package.json
-│ ├─ package-lock.json
 │ └─ tsconfig.json
 │
 ├─ front/
-│ ├─ node_modules/
 │ ├─ public/
 │ ├─ src/
 │ │ ├─ api/
@@ -92,10 +89,9 @@ SIMPLSET/
 │ │ └─ main.tsx
 │ ├─ .gitignore
 │ ├─ package.json
-│ ├─ package-lock.json
 │ ├─ index.html
 │ ├─ eslint.config.js
-│ └─ README.md
+│ README.md
 
 ```
 
