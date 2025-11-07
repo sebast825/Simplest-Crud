@@ -1,12 +1,20 @@
 import { Request, Response } from "express";
 import TaskService from "../services/taskService";
 
-
 class TaskController {
   constructor(private taskService: TaskService) {}
-
-  getTasksByUser = async (req: Request, res: Response): Promise<void> => {
-    try {
+  asyncHandler = (fn: (req: Request, res: Response) => Promise<void>) => {
+    return async (req: Request, res: Response) => {
+      try {
+        await fn(req, res);
+      } catch (error: any) {
+        console.log("Error: ", error);
+        res.status(500).json({ error: "Internal server Error" });
+      }
+    };
+  };
+  getTasksByUser = this.asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
       const userId = (req as any).userId; // comes from the token
 
       if (!userId) {
@@ -16,13 +24,11 @@ class TaskController {
       var rsta = await this.taskService.getTasksByUser(userId);
 
       res.status(200).json({ tasks: rsta });
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      res.status(500).json({ error: (error as Error).message });
     }
-  };
-  updateTaskStatus = async (req: Request, res: Response): Promise<void> => {
-    try {
+  );
+
+  updateTaskStatus = this.asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
       const taskId = parseInt(req.params.taskId, 10);
       if (!taskId) {
         res.status(400).json({ error: "task Id is required" });
@@ -31,13 +37,10 @@ class TaskController {
       var rsta = await this.taskService.updateTaskStatus(taskId);
 
       res.status(200).json({ tasks: rsta });
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      res.status(500).json({ error: (error as Error).message });
     }
-  };
-   deleteTask = async (req: Request, res: Response): Promise<void> => {
-    try {
+  );
+  deleteTask = this.asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
       const taskId = parseInt(req.params.taskId, 10);
       if (!taskId) {
         res.status(400).json({ error: "task Id is required" });
@@ -46,29 +49,22 @@ class TaskController {
       var rsta = await this.taskService.deleteTask(taskId);
 
       res.status(200).json({ taskId: taskId });
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      res.status(500).json({ error: (error as Error).message });
     }
-  };
-  createTask = async (req: Request, res: Response): Promise<void> => {
-    try {
-          const  { title }  = req.body;
-          const userId = (req as any).userId; // comes from the token
+  );
+  createTask = this.asyncHandler(
+    async (req: Request, res: Response): Promise<void> => {
+      const { title } = req.body;
+      const userId = (req as any).userId; // comes from the token
 
       if (!userId || !title) {
         res.status(400).json({ error: "User Id and title is required" });
         return;
       }
-      var rsta = await this.taskService.createTask(title,userId);
+      var rsta = await this.taskService.createTask(title, userId);
 
       res.status(200).json({ tasks: rsta });
-    } catch (error) {
-      console.error("Error fetching tasks:", error);
-      res.status(500).json({ error: (error as Error).message });
     }
-  };
-  
+  );
 }
 
 export default TaskController;
