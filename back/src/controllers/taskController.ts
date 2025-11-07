@@ -7,7 +7,6 @@ class TaskController {
 
   getTasksByUser = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
-
       const userId = (req as any).userId; // comes from the token
       var rsta = await this.taskService.getTasksByUser(userId);
 
@@ -17,25 +16,22 @@ class TaskController {
 
   updateTaskStatus = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
-
       const taskId = parseInt(req.params.taskId, 10);
       var updatedTask = await this.taskService.updateTaskStatus(taskId);
 
-      res.status(200).json( updatedTask );
+      res.status(200).json(updatedTask);
     }
   );
   deleteTask = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const taskId = parseInt(req.params.taskId, 10);
+      await this.taskService.deleteTask(taskId);
 
-      var rsta = await this.taskService.deleteTask(taskId);
-
-      res.status(200).json({ taskId: taskId });
+      res.status(204).json();
     }
   );
   createTask = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
-
       const { title } = req.body;
       const userId = (req as any).userId; // comes from the token
       var rsta = await this.taskService.createTask(title, userId);
