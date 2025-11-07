@@ -19,9 +19,9 @@ class TaskController {
     async (req: Request, res: Response): Promise<void> => {
 
       const taskId = parseInt(req.params.taskId, 10);
-      var rsta = await this.taskService.updateTaskStatus(taskId);
+      var updatedTask = await this.taskService.updateTaskStatus(taskId);
 
-      res.status(200).json({ tasks: rsta });
+      res.status(200).json( updatedTask );
     }
   );
   deleteTask = asyncHandler(
