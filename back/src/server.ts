@@ -20,7 +20,7 @@ app.use(cors({
 
 app.use('/api', healthRoutes);
 app.use('/api', authRoutes);
-app.use('/api', taskRoutes);
+app.use('/api/task', taskRoutes);
 app.use('/api', userRoutes);
 
 

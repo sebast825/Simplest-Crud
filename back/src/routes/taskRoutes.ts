@@ -6,9 +6,9 @@ import { authMiddleware } from "../middlewares/authMiddleware ";
 const router = Router();
 const taskController = new TaskController(taskService);
 
-router.get("/task/user",authMiddleware, taskController.getTasksByUser);
-router.patch("/task/:taskId",  authMiddleware,taskController.updateTaskStatus);
-router.delete("/task/:taskId", authMiddleware, taskController.deleteTask);
-router.post("/task", authMiddleware, taskController.createTask);
+router.get("/user",authMiddleware, taskController.getTasksByUser);
+router.patch("/:taskId",  authMiddleware,taskController.updateTaskStatus);
+router.delete("/:taskId", authMiddleware, taskController.deleteTask);
+router.post("", authMiddleware, taskController.createTask);
 
 export  {router as taskRoutes}; 
