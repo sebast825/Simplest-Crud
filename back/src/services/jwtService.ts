@@ -1,58 +1,54 @@
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
-import jwt, { SignOptions, Algorithm } from 'jsonwebtoken';
-
-class JwtService{
-
-private readonly jwtSecret: string;
-
-
-     constructor() {
-    this.jwtSecret = "mi-clave-secreta-super-segura";
-  
+class JwtService {
+  private readonly jwtSecret: string;
+  private expiresIn: string;
+  constructor() {
+    this.jwtSecret = process.env.JWT_SECRET || "mi-clave-secreta-super-segura";
+    this.expiresIn = process.env.EXPIRES_IN || "1h";
   }
+  public generateToken(userPayload: number) {
+    const crypto = require("crypto");
 
-    public generateToken(userPayload:number) {
-    const crypto = require('crypto');
     const payload = {
-      
-      iss: 'mi-app-segura', 
-      aud: 'mi-app-users', 
-      sub: userPayload, 
-      iat: Math.floor(Date.now() / 1000), 
-      jti: crypto.randomBytes(16).toString('hex'),
-      
-      userId:userPayload,
-  
+      iss: process.env.JWT_ISSUER,
+      aud: process.env.JWT_AUDIENCE,
+      sub: userPayload,
+      iat: Math.floor(Date.now() / 1000),
+      jti: crypto.randomBytes(16).toString("hex"),
+
+      userId: userPayload,
     };
 
-   
-      return jwt.sign(payload, this.jwtSecret, {
-         expiresIn: '15m' ,
-         algorithm: 'HS256' 
-      });
+    return jwt.sign(payload, this.jwtSecret, {
+      expiresIn: this.expiresIn as jwt.SignOptions["expiresIn"],
+      algorithm: "HS256",
+    });
   }
   public verifyToken(token: string): any {
-  try {
-    const decoded = jwt.verify(token, this.jwtSecret, {
-      algorithms: ['HS256'],
-      issuer: 'mi-app-segura',
-      audience: 'mi-app-users'
-    });
-    
-    return decoded;
-  } catch (error) {
-    throw new Error('Token invalid');
-  }
-}
+    try {
+      const decoded = jwt.verify(token, this.jwtSecret, {
+        algorithms: ["HS256"],
+        issuer: process.env.JWT_ISSUER,
+        audience: process.env.JWT_AUDIENCE,
+      });
 
-public validateToken(token: string): boolean {
-  try {
-    this.verifyToken(token);
-    return true;
-  } catch {
-    return false;
+      return decoded;
+    } catch (error) {
+      throw new Error("Token invalid");
+    }
   }
-}
+
+  public validateToken(token: string): boolean {
+    try {
+      this.verifyToken(token);
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }
 
 export default JwtService;
