@@ -1,13 +1,14 @@
-# Descripción del proyecto
+# Project Description
 
-Esta aplicación es un sistema web fullstack desarrollado con React y Typescript en el frontend y Node.js, Express y Typescript  en el backend, conectado a una base de datos SQL Server. Permite a los usuarios registrarse, iniciar sesión y gestionar tareas a través de un CRUD protegido con autenticación mediante tokens JWT.
+This application is a full-stack web system developed with React and TypeScript on the frontend, and Node.js, Express, and TypeScript on the backend, connected to a SQL Server database.
+It allows users to register, log in, and manage tasks through a CRUD protected by JWT token authentication.
 
 ## Run App
 ```bash
 
 ## Run the back end
 cd back
-create .env file with required informaiton follow .env.example
+# create .env file with required informaiton follow .env.example
 npm install
 npm run dev
 
@@ -17,7 +18,7 @@ npm install
 npm run dev
 ```
 
-## Backup de la base de datos
+## Database Backup
 
 ```sql
 CREATE TABLE users (
@@ -39,21 +40,23 @@ CREATE TABLE tasks (
 
 ```
 
-## Funcionalidades principales
-- Registro y login de usuarios con autenticación segura.
-- CRUD de tareas accesible solo para usuarios autenticados.
-- Manejo seguro de tokens almacenados en cookies.
-- Conexión a base de datos SQL Server para persistencia de datos.
-- Código modular y organizado siguiendo buenas prácticas de desarrollo.
+## Main Features
 
-## Tecnologías usadas
-- **Frontend:** React Typescript
-- **Backend:** Node.js + Express
-- **Base de datos:** SQL Server
-- **Autenticación:** JWT
-- **Estilos:** Bootstrap
+- User registration and login with secure authentication.
+- Task CRUD accessible only to authenticated users.
+- Secure token handling stored in cookies.
+- SQL Server database connection for data persistence.
+- Modular and well-organized code following good development practices.
 
-## Estructura de Proyecto
+## Technologies
+
+- Frontend: React + TypeScript
+- Backend: Node.js + Express
+- Database: SQL Server
+- Authentication: JWT
+- Styles: Bootstrap
+
+## Project Structure
 ```bash
 Project/
 ├─ back/
