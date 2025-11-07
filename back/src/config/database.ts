@@ -25,4 +25,4 @@ const connectDB  = async (): Promise<sql.ConnectionPool>   => {
     return pool;
 };
 
-module.exports = { connectDB, sql };
+export   { connectDB, sql };

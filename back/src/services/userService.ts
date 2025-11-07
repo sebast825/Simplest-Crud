@@ -3,49 +3,28 @@ import { UserCreateRequestDto } from "../dto/user/userCreateRequestDto.types";
 import { UserResponseDto } from "../dto/user/userResponseDto.types";
 import { CustomError } from "../helpers/customError";
 import { comparePassword, hashPassword } from "../helpers/hashPasswords";
+import UserRepository, { userRepository } from "../repositories/userRepository";
 
 const { connectDB, sql } = require("../config/database.ts");
 
 class UserService {
+  constructor(private userRepository: UserRepository) {}
+
   public async create(userDto: UserCreateRequestDto): Promise<UserResponseDto> {
-    try {
-  
+
       if (!userDto || !userDto.email || !userDto.password || !userDto.name) {
         throw new CustomError("Missing required fields", 400);
       }
-
-      const pool = await connectDB();
-      const checkRequest = pool.request();
-      const checkEmail = await checkRequest
-        .input("email", sql.NVarChar, userDto.email)
-        .query("SELECT id FROM users WHERE email = @email");
-
-      if (checkEmail.recordset.length > 0) {
-        throw new CustomError("Email already registered", 422);
-      }
       var hashPass: string = await hashPassword(userDto.password);
-      const request = pool.request();
-
-      const result = await request
-        .input("name", sql.NVarChar, userDto.name)
-        .input("email", sql.NVarChar, userDto.email)
-        .input("password", sql.NVarChar, hashPass).query(`
-         INSERT INTO users (name, email, password) 
-         OUTPUT INSERTED.id, INSERTED.name, INSERTED.email  
-         VALUES (@name, @email, @password);
-      `);
-      const dbUser = result.recordset[0];
+      userDto.password = hashPass;
+      const dbUser: any = await this.userRepository.create(userDto);
 
       const userResponse: UserResponseDto = {
         name: dbUser.name,
         id: dbUser.id,
       };
       return userResponse;
-    } catch (error: any) {
-      // ✅ Aquí capturas errores de SQL
-      console.error("Error DB:", error.message);
-      throw error; // Re-lanzas para que el controller lo maneje
-    }
+
   }
   public async emailPasswordMatch(
     loginDto: AuthRequestDto
@@ -53,16 +32,8 @@ class UserService {
     if (!loginDto || !loginDto.email || !loginDto.password) {
       throw new CustomError("Missing required fields", 400);
     }
-    const pool = await connectDB();
-    const request = pool.request();
-    const result = await request.input("email", sql.NVarChar, loginDto.email)
-      .query(`
-      SELECT id, password,name
-      FROM users
-      WHERE email = @email 
-    `);
 
-    const dbUser = result.recordset[0];
+    const dbUser = await this.userRepository.getByEmail(loginDto.email);
     if (!dbUser) {
       throw new CustomError("Invalid email or password", 401);
     }
@@ -79,4 +50,4 @@ class UserService {
 }
 
 export default UserService;
-export const userService = new UserService();
+export const userService = new UserService(userRepository);
