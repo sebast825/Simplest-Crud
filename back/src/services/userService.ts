@@ -1,6 +1,7 @@
 import { AuthRequestDto } from "../dto/auth/authRequestDto.types";
 import { UserCreateRequestDto } from "../dto/user/userCreateRequestDto.types";
 import { UserResponseDto } from "../dto/user/userResponseDto.types";
+import { CustomError } from "../helpers/customError";
 import { comparePassword, hashPassword } from "../helpers/hashPasswords";
 
 const { connectDB, sql } = require("../config/database.ts");
@@ -8,6 +9,13 @@ const { connectDB, sql } = require("../config/database.ts");
 class UserService {
   public async create(userDto: UserCreateRequestDto): Promise<UserResponseDto> {
     try {
+      if (userDto == null) {
+        throw new CustomError("Invalid user data", 400);
+      }
+      if (!userDto || !userDto.email || !userDto.password || !userDto.name) {
+        throw new CustomError("Missing required fields", 400);
+      }
+
       const pool = await connectDB();
       const checkRequest = pool.request();
       const checkEmail = await checkRequest
@@ -55,9 +63,9 @@ class UserService {
     `);
 
       const dbUser = result.recordset[0];
-        if(!dbUser){
+      if (!dbUser) {
         throw new Error("Invalid email or password");
-        }
+      }
       if (await comparePassword(loginDto.password, dbUser.password)) {
         const userResponse: UserResponseDto = {
           name: dbUser.name,
@@ -70,7 +78,7 @@ class UserService {
     } catch (error: any) {
       // ✅ Aquí capturas errores de SQL
       console.error("Error DB:", error.message);
-        throw new Error("Internal Server Error");
+      throw new Error("Internal Server Error");
     }
   }
 }
