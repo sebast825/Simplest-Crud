@@ -5,8 +5,6 @@ import { CustomError } from "../helpers/customError";
 import { comparePassword, hashPassword } from "../helpers/hashPasswords";
 import UserRepository, { userRepository } from "../repositories/userRepository";
 
-const { connectDB, sql } = require("../config/database.ts");
-
 class UserService {
   constructor(private userRepository: UserRepository) {}
 

@@ -1,6 +1,3 @@
-const { connectDB, sql } = require("../config/database.ts");
-
-import { Request, Response } from "express";
 import { CustomError } from "../helpers/customError";
 import TaskRepository, { taskRepository } from "../repositories/taskRepository";
 
