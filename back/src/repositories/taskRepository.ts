@@ -11,6 +11,16 @@ class TaskRepository {
 
     return result.recordset;
   };
+  getById = async (taskId: number): Promise<any> => {
+    const pool = await connectDB();
+
+    const result = await pool
+      .request()
+      .input("Id", sql.Int, (taskId))
+      .query("SELECT * FROM tasks WHERE Id = @Id");
+
+    return result.recordset[0];
+  };
 
   updateTaskStatus = async (taskId: number) => {
     const pool = await connectDB();

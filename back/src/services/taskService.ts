@@ -13,11 +13,11 @@ class TaskService {
     const tasks = await this.taskRepository.getAllByUserId(userId);
     return tasks;
   }
-  public async updateTaskStatus(taskId: number) {
+  public async updateTaskStatus(taskId: number, userId: number) {
     if (!taskId) {
       throw new CustomError("Task Id is required", 400);
     }
-
+    await this.taskBelongsUser(taskId, userId);
     return await this.taskRepository.updateTaskStatus(taskId);
   }
   public async deleteTask(taskId: number) {
@@ -34,6 +34,16 @@ class TaskService {
     }
 
     return await this.taskRepository.create(title, userId);
+  }
+
+  private async taskBelongsUser(taskId: number, userId: number) {
+    var taskToUpdate = await this.taskRepository.getById(taskId);
+    if (!taskToUpdate) {
+      throw new CustomError("Task not found", 404);
+    }
+    if (parseInt(taskToUpdate.userId) != userId) {
+      throw new CustomError("Unauthorize to edit this task", 401);
+    }
   }
 }
 

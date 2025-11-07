@@ -17,7 +17,9 @@ class TaskController {
   updateTaskStatus = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const taskId = parseInt(req.params.taskId, 10);
-      var updatedTask = await this.taskService.updateTaskStatus(taskId);
+      const userId = (req as any).userId; // comes from the token
+
+      var updatedTask = await this.taskService.updateTaskStatus(taskId, userId);
 
       res.status(200).json(updatedTask);
     }
@@ -25,6 +27,7 @@ class TaskController {
   deleteTask = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const taskId = parseInt(req.params.taskId, 10);
+
       await this.taskService.deleteTask(taskId);
 
       res.status(204).json();
