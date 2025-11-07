@@ -1,28 +1,11 @@
 import { Request, Response } from "express";
 import TaskService from "../services/taskService";
+import { asyncHandler } from "../helpers/asyncHandler";
 
 class TaskController {
   constructor(private taskService: TaskService) {}
-  asyncHandler = (fn: (req: Request, res: Response) => Promise<void>) => {
 
-    return async (req: Request, res: Response) => {
-      try {
-
-        await fn(req, res);
-      } catch (error: any) {
-
-        console.log("Error: ", error);
-        const statusCode = error.statusCode || 500;
-        
-        if (statusCode >= 500) {
-          res.status(500).json({ error: "Internal server Error" });
-        } else {
-          res.status(statusCode).json({ error: error.message });
-        }
-      }
-    };
-  };
-  getTasksByUser = this.asyncHandler(
+  getTasksByUser = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
 
       const userId = (req as any).userId; // comes from the token
@@ -32,7 +15,7 @@ class TaskController {
     }
   );
 
-  updateTaskStatus = this.asyncHandler(
+  updateTaskStatus = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
 
       const taskId = parseInt(req.params.taskId, 10);
@@ -41,7 +24,7 @@ class TaskController {
       res.status(200).json({ tasks: rsta });
     }
   );
-  deleteTask = this.asyncHandler(
+  deleteTask = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
       const taskId = parseInt(req.params.taskId, 10);
 
@@ -50,7 +33,7 @@ class TaskController {
       res.status(200).json({ taskId: taskId });
     }
   );
-  createTask = this.asyncHandler(
+  createTask = asyncHandler(
     async (req: Request, res: Response): Promise<void> => {
 
       const { title } = req.body;
