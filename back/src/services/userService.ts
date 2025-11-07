@@ -9,9 +9,7 @@ const { connectDB, sql } = require("../config/database.ts");
 class UserService {
   public async create(userDto: UserCreateRequestDto): Promise<UserResponseDto> {
     try {
-      if (userDto == null) {
-        throw new CustomError("Invalid user data", 400);
-      }
+  
       if (!userDto || !userDto.email || !userDto.password || !userDto.name) {
         throw new CustomError("Missing required fields", 400);
       }
