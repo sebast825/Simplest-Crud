@@ -34,9 +34,9 @@ class TaskController {
     async (req: Request, res: Response): Promise<void> => {
       const { title } = req.body;
       const userId = (req as any).userId; // comes from the token
-      var rsta = await this.taskService.createTask(title, userId);
+      var createdTask = await this.taskService.createTask(title, userId);
 
-      res.status(200).json({ tasks: rsta });
+      res.status(201).json(createdTask);
     }
   );
 }

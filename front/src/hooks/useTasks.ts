@@ -57,7 +57,7 @@ export const useTasks = () => {
 
       var rsta =  await apiClient.post("/tasks/",{title});
 
-    setTasks(prevTasks => [ rsta.data.tasks,...prevTasks]);
+    setTasks(prevTasks => [ rsta.data,...prevTasks]);
 
     } catch (error) {
       console.error("Error fetching tasks:", error);
