@@ -1,10 +1,14 @@
 const { connectDB, sql } = require("../config/database.ts");
 
 import { Request, Response } from "express";
+import { CustomError } from "../helpers/customError";
 
 class TaskService {
   public async getTasksByUser(userId: string): Promise<void> {
     try {
+      if (!userId) {
+        throw new CustomError("Uuser Id is required", 400);
+      }
       const pool = await connectDB();
 
       const result = await pool
@@ -20,6 +24,9 @@ class TaskService {
   }
   public async updateTaskStatus(taskId: number) {
     try {
+      if (!taskId) {
+        throw new CustomError("Task Id is required", 400);
+      }
       const pool = await connectDB();
       const result = await pool
         .request()
@@ -36,6 +43,9 @@ class TaskService {
   }
   public async deleteTask(taskId: number) {
     try {
+      if (!taskId) {
+        throw new CustomError("Task Id is required", 400);
+      }
       const pool = await connectDB();
       const result = await pool
         .request()
@@ -51,6 +61,9 @@ class TaskService {
 
   public async createTask(title: string, userId: number) {
     try {
+      if (!userId || !title) {
+        throw new CustomError("User Id and title are required", 400);
+      }
       const pool = await connectDB();
       const result = await pool
         .request()
