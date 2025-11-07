@@ -23,7 +23,7 @@ class UserService {
         .query("SELECT id FROM users WHERE email = @email");
 
       if (checkEmail.recordset.length > 0) {
-        throw new Error("El email ya está registrado");
+        throw new CustomError("Email already registered", 422);
       }
       var hashPass: string = await hashPassword(userDto.password);
       const request = pool.request();
@@ -64,7 +64,7 @@ class UserService {
 
       const dbUser = result.recordset[0];
       if (!dbUser) {
-        throw new Error("Invalid email or password");
+        throw new CustomError("Invalid email or password", 400);
       }
       if (await comparePassword(loginDto.password, dbUser.password)) {
         const userResponse: UserResponseDto = {
@@ -73,7 +73,7 @@ class UserService {
         };
         return userResponse;
       } else {
-        throw new Error("Invalid email or password");
+        throw new CustomError("Invalid email or password", 400);
       }
     } catch (error: any) {
       // ✅ Aquí capturas errores de SQL
