@@ -55,7 +55,9 @@ class UserService {
     `);
 
       const dbUser = result.recordset[0];
-
+        if(!dbUser){
+        throw new Error("Invalid email or password");
+        }
       if (await comparePassword(loginDto.password, dbUser.password)) {
         const userResponse: UserResponseDto = {
           name: dbUser.name,
@@ -68,7 +70,7 @@ class UserService {
     } catch (error: any) {
       // ✅ Aquí capturas errores de SQL
       console.error("Error DB:", error.message);
-      throw error; // Re-lanzas para que el controller lo maneje
+        throw new Error("Internal Server Error");
     }
   }
 }
