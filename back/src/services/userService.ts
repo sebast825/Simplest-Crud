@@ -52,33 +52,30 @@ class UserService {
   public async emailPasswordMatch(
     loginDto: AuthRequestDto
   ): Promise<UserResponseDto> {
-    try {
-      const pool = await connectDB();
-      const request = pool.request();
-      const result = await request.input("email", sql.NVarChar, loginDto.email)
-        .query(`
+    if (!loginDto || !loginDto.email || !loginDto.password) {
+      throw new CustomError("Missing required fields", 400);
+    }
+    const pool = await connectDB();
+    const request = pool.request();
+    const result = await request.input("email", sql.NVarChar, loginDto.email)
+      .query(`
       SELECT id, password,name
       FROM users
       WHERE email = @email 
     `);
 
-      const dbUser = result.recordset[0];
-      if (!dbUser) {
-        throw new CustomError("Invalid email or password", 400);
-      }
-      if (await comparePassword(loginDto.password, dbUser.password)) {
-        const userResponse: UserResponseDto = {
-          name: dbUser.name,
-          id: dbUser.id,
-        };
-        return userResponse;
-      } else {
-        throw new CustomError("Invalid email or password", 400);
-      }
-    } catch (error: any) {
-      // ✅ Aquí capturas errores de SQL
-      console.error("Error DB:", error.message);
-      throw new Error("Internal Server Error");
+    const dbUser = result.recordset[0];
+    if (!dbUser) {
+      throw new CustomError("Invalid email or password", 401);
+    }
+    if (await comparePassword(loginDto.password, dbUser.password)) {
+      const userResponse: UserResponseDto = {
+        name: dbUser.name,
+        id: dbUser.id,
+      };
+      return userResponse;
+    } else {
+      throw new CustomError("Invalid email or password", 401);
     }
   }
 }
