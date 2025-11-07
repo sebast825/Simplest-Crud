@@ -12,7 +12,7 @@ export const useTasks = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await apiClient.get("/task/user");
+      const response = await apiClient.get("/tasks/user");
       const data = response.data;
       setTasks(data.tasks);
       console.log(data.tasks);
@@ -26,7 +26,7 @@ export const useTasks = () => {
     try {
       console.log("aca", taskId);
 
-      const response = await apiClient.patch("/task/" + taskId);
+      const response = await apiClient.patch("/tasks/" + taskId);
       const updatedTask = response.data.tasks;
 
       setTasks((prevTasks) =>
@@ -42,7 +42,7 @@ export const useTasks = () => {
     try {
       console.log("aca", taskId);
 
-       await apiClient.delete("/task/" + taskId);
+       await apiClient.delete("/tasks/" + taskId);
 
       setTasks(prevTasks => prevTasks.filter(t => t.id !== taskId));
 
@@ -55,7 +55,7 @@ export const useTasks = () => {
   const createTask = async (title: string) => {
     try {
 
-      var rsta =  await apiClient.post("/task/",{title});
+      var rsta =  await apiClient.post("/tasks/",{title});
 
     setTasks(prevTasks => [ rsta.data.tasks,...prevTasks]);
 
