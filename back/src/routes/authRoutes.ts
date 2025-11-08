@@ -9,6 +9,8 @@ const authController = new AuthController(userService, jwtService);
 const userController = new UserController(userService);
 
 router.post("/login", authController.login);
+router.post("/logout", authController.logout);
+
 router.post("/register", userController.create);
 
 export { router as authRoutes };
