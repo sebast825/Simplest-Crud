@@ -9,7 +9,7 @@ export const NavBar = () => {
   const showBtn = location.pathname == "/dashboard";
   return (
     <>
-      <Navbar expand="lg" className="border-bottom shadow-sm bg-dark  p-3">
+      <Navbar fixed="top" expand="lg" className="border-bottom shadow-sm bg-dark vw-100 p-3">
         <Navbar.Brand
           href="https://sebastianmolina.netlify.app/"
           target="_blank"
@@ -21,7 +21,7 @@ export const NavBar = () => {
         <Nav className="ms-auto">
           {showBtn && (
             <Button className="" onClick={logout}>
-              Logout
+              Salir
             </Button>
           )}
         </Nav>

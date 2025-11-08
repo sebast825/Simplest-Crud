@@ -12,7 +12,7 @@ function Dashboard() {
 
   return (
     <>
-      <div className="vw-100 vh-100 p-3 p-sm-5">
+      <div className="flex-grow-1  d-flex flex-column vw-100 mt-5 pt-5 p-3 p-sm-5">
         <Container
           fluid
           className="bg-primary text-white text-center py-5 rounded-3 mb-4"
