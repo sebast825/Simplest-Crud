@@ -1,28 +1,26 @@
-import sql from 'mssql';
-
-import dotenv from 'dotenv';
-dotenv.config();
+import sql from "mssql";
+import { ENV } from "./env";
 
 const dbConfig = {
-    server: process.env.DB_SERVER ?? 'localhost',
-    port: Number(process.env.DB_PORT),
-    database: process.env.DB_DATABASE ,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    options: {
-        encrypt: process.env.DB_ENCRYPT === 'true',
-        trustServerCertificate: process.env.DB_TRUST_CERT === 'true',
-        enableArithAbort: true,
-    }
+  server: ENV.DB_SERVER ?? "localhost",
+  port: Number(ENV.DB_PORT),
+  database: ENV.DB_DATABASE,
+  user: ENV.DB_USER,
+  password: ENV.DB_PASSWORD,
+  options: {
+    encrypt: ENV.DB_ENCRYPT,
+    trustServerCertificate: ENV.DB_TRUST_CERT,
+    enableArithAbort: true,
+  },
 };
-let pool : sql.ConnectionPool| null = null;;
+let pool: sql.ConnectionPool | null = null;
 
-const connectDB  = async (): Promise<sql.ConnectionPool>   => {
-    if (!pool) {
-        pool = await sql.connect(dbConfig);
-        console.log('Conected to SQL Server');
-    }
-    return pool;
+const connectDB = async (): Promise<sql.ConnectionPool> => {
+  if (!pool) {
+    pool = await sql.connect(dbConfig);
+    console.log("Conected to SQL Server");
+  }
+  return pool;
 };
 
-export   { connectDB, sql };
+export { connectDB, sql };
