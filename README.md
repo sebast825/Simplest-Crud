@@ -20,25 +20,8 @@ npm run dev
 
 ## Database Backup
 
-```sql
-CREATE TABLE users (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    name NVARCHAR(100) NOT NULL,
-    email NVARCHAR(255) NOT NULL,
-    password NVARCHAR(255) NOT NULL, 
-    creationDate DATETIME DEFAULT GETDATE()
-);
+- Table creation scripts: `/database/schema.sql`
 
-CREATE TABLE tasks (
-    id INT IDENTITY(1,1) PRIMARY KEY,
-    title NVARCHAR(255) NOT NULL,
-    done BIT DEFAULT 0,
-    userId INT NULL,
-    createdAt DATETIME DEFAULT GETDATE(),
-    CONSTRAINT FK_tasks_users FOREIGN KEY (userId) REFERENCES users(id)
-);
-
-```
 
 ## Main Features
 
@@ -55,6 +38,27 @@ CREATE TABLE tasks (
 - Database: SQL Server
 - Authentication: JWT
 - Styles: Bootstrap
+
+
+## API Routes
+
+### Health Check
+- GET `/api/health` - General API status
+- GET `/api/health/database` - Database connection status
+
+### Authentication
+- POST `/api/auth/login` - User login
+- POST `/api/auth/register` - User registration
+
+### Tasks
+- GET `/api/tasks/user` - Get user tasks
+- POST `/api/tasks` - Create new task
+- PATCH `/api/tasks/:taskId` - Update task status
+- DELETE `/api/tasks/:taskId` - Delete task
+
+> Note: All Task routes require Authorization header with JWT token.
+
+
 
 ## Project Structure
 ```bash
@@ -97,6 +101,4 @@ Project/
 │ README.md
 
 ```
-
-
 
