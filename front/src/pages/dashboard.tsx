@@ -1,4 +1,11 @@
-import { Button, Col, Container, ListGroup, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Dropdown,
+  ListGroup,
+  Row,
+} from "react-bootstrap";
 import { useTasks } from "../hooks/useTasks";
 import CreateTaskModal from "../modals/createTaskModal";
 import { useLocation } from "react-router-dom";
@@ -23,7 +30,7 @@ function Dashboard() {
           <Container className="mt-4  mt-ms-1">
             <Row className="mb-3 align-items-center">
               <Col>
-                <h2 >Mis tareas</h2>
+                <h2>Mis tareas</h2>
               </Col>
               <Col className="text-end">
                 <CreateTaskModal onCreate={(title) => createTask(title)} />{" "}
@@ -43,30 +50,50 @@ function Dashboard() {
                       className="d-flex justify-content-between align-items-center gap-1"
                     >
                       <div>
-                        <strong>{task.title}</strong>{" "}
-                        <span
-                          className={task.done ? "text-success" : ""}
-                        >
+                        <strong>{task.title} - </strong>{" "}
+                        <span className={task.done ? "text-success" : ""}>
                           {task.done ? "Hecha" : "Pendiente"}
                         </span>
                       </div>
 
-                      <div className="d-flex gap-2">
-                        <Button
-                          size="sm"
-                          variant={task.done ? "warning" : "success"}
-                          onClick={() => updateTaskStatus(task.id)}
-                        >
-                          {task.done ? "Marcar pendiente" : "Marcar hecha"}
-                        </Button>
+                      <div>
+                        {/* Botones para escritorio */}
+                        <div className="d-none d-md-flex gap-2">
+                          <Button
+                            size="sm"
+                            variant={task.done ? "warning" : "success"}
+                            onClick={() => updateTaskStatus(task.id)}
+                          >
+                            {task.done ? "Marcar pendiente" : "Marcar hecha"}
+                          </Button>
 
-                        <Button
-                          size="sm"
-                          variant="danger"
-                          onClick={() => deleteTask(task.id)}
-                        >
-                          Eliminar
-                        </Button>
+                          <Button
+                            size="sm"
+                            variant="danger"
+                            onClick={() => deleteTask(task.id)}
+                          >
+                            Eliminar
+                          </Button>
+                        </div>
+
+                        {/* Dropdown para mobile */}
+                        <Dropdown className="d-flex d-md-none">
+                          <Dropdown.Toggle size="sm" variant="info">
+                            
+                          </Dropdown.Toggle>
+
+                          <Dropdown.Menu>
+                            <Dropdown.Item
+                              onClick={() => updateTaskStatus(task.id)}
+
+                            >
+                              {task.done ? "Marcar pendiente" : "Marcar hecha"}
+                            </Dropdown.Item>
+                            <Dropdown.Item onClick={() => deleteTask(task.id)}>
+                              Eliminar
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
                       </div>
                     </ListGroup.Item>
                   ))
