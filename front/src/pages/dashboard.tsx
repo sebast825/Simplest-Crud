@@ -30,7 +30,7 @@ function Dashboard() {
               </Col>
             </Row>
 
-            <ListGroup className="bg-light text-darl text-center py-5 rounded-3 mb-4">
+            <ListGroup className="bg-secondary text-darl text-center py-5 rounded-3 mb-4 p-2 gap-2">
               {tasks.length == 0 ? (
                 <h3>No tienes tareas!</h3>
               ) : (
@@ -39,13 +39,13 @@ function Dashboard() {
                   .map((task) => (
                     <ListGroup.Item
                       key={task.id}
-                      variant={task.done ? "success" : ""}
-                      className="d-flex justify-content-between align-items-center"
+                      variant={task.done ? "" : "warning"}
+                      className="d-flex justify-content-between align-items-center gap-1"
                     >
                       <div>
                         <strong>{task.title}</strong>{" "}
                         <span
-                          className={task.done ? "text-success" : "text-muted"}
+                          className={task.done ? "text-success" : ""}
                         >
                           {task.done ? "Hecha" : "Pendiente"}
                         </span>

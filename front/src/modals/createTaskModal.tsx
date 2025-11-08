@@ -23,7 +23,7 @@ export const CreateTaskModal = ({ onCreate }: ICreateTaskModal) => {
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
+      <Button variant="info"  onClick={handleShow}>
           Nueva Tarea
       </Button>
 
