@@ -13,7 +13,7 @@ export const NavBar = () => {
         <Navbar.Brand
           href="https://sebastianmolina.netlify.app/"
           target="_blank"
-          className="fw-bold text-primary"
+          className="fw-bold text-secondary"
         >
           Portfolio
         </Navbar.Brand>
