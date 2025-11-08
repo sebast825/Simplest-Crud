@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form,  Row } from "react-bootstrap";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
+
 
 function Login() {
   const { login, error ,setError} = useAuth();
@@ -23,7 +24,7 @@ function Login() {
 
   return (
     <>
-      <Row className=" justify-content-center align-items-center vh-100 vw-100 ">
+      <Row className=" justify-content-center align-items-center  vw-100 ">
         <Col md={4} className="p-4 border rounded-3 shadow-lg">
           <h2 className="text-center mb-2 text-primary">Iniciar Sesión</h2>
           <Form onSubmit={() => {}} className="d-flex flex-column ">
