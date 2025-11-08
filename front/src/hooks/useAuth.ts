@@ -31,6 +31,16 @@ export const useAuth = () => {
       console.error('Login failed:', error);
     }
    }
-
-  return { user, login,error ,setError};
+   const logout = async ()=>{
+    try {
+      console.log("le pega")
+      await apiClient.post('/auth/logout');
+      
+    } catch (error) {
+      setError(true);
+      console.error('Login failed:', error);
+    }
+   }
+   
+  return { user, login,error ,setError,logout};
 };
