@@ -3,7 +3,7 @@ const { connectDB } = require('../config/database.ts');
 
 const router = Router();
 
-router.get('/health-database', async (req: Request, res: Response) => {
+router.get('/database', async (req: Request, res: Response) => {
   try {
     const pool = await connectDB();
  
@@ -24,7 +24,7 @@ router.get('/health-database', async (req: Request, res: Response) => {
 });
 
 
-router.get('/health',(req : Request, res: Response) => {
+router.get('/',(req : Request, res: Response) => {
   res.json({ 
     status: 'OK', 
     message: 'API working correctly',
