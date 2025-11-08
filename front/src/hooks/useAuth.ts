@@ -33,9 +33,8 @@ export const useAuth = () => {
    }
    const logout = async ()=>{
     try {
-      console.log("le pega")
       await apiClient.post('/auth/logout');
-      
+      navigate("/")
     } catch (error) {
       setError(true);
       console.error('Login failed:', error);
