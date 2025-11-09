@@ -1,10 +1,6 @@
-
 @import "variables";
+@import "fonts";
 
-button{
-     color: $body-color;
-     text-shadow: 0 0 5px #444;
-}
 
 @import "bootswatch/dist/darkly/variables";
 @import "bootstrap/scss/bootstrap";
