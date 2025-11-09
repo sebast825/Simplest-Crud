@@ -28,6 +28,7 @@ export const TaskActions = ({ task, onUpdate, onDelete }: TaskActionsProps) => {
               size="sm"
               variant={task.done ? "warning" : "success"}
               onClick={() => onUpdate(task.id)}
+              style={{ minWidth: "150px" }}
             >
               {task.done ? "Marcar pendiente" : "Marcar hecha"}
             </Button>
