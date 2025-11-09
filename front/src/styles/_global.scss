@@ -1,0 +1,34 @@
+body {
+  font-family: $font-body;
+  background-color: $body-bg;
+}
+
+h1,
+h2,
+h3,
+a {
+  font-family: $font-heading;
+  letter-spacing: 1px;
+}
+
+a {
+  text-underline-offset: 4px !important;
+  display: inline-block;
+  text-decoration: underline !important;
+  transition: color 0.2s ease;
+
+  &:hover {
+    filter: brightness(2.5);
+  }
+}
+.container {
+  font-family: $font-body;
+}
+button,
+.btn {
+  font-family: $font-button !important;
+  font-weight: bolder !important;
+  color: $body-color;
+  text-shadow: 0 0 5px #444;
+  letter-spacing: 1px;
+}

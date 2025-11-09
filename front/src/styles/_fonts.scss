@@ -6,34 +6,3 @@ $font-heading: "Playfair Display", serif;
 $font-body: "Inter", sans-serif;
 $font-button: "Nunito", sans-serif;
 
-body {
-  font-family: $font-body;
-  background-color: $body-bg;
-  color: $body-color;
-}
-
-h1,
-h2,
-h3,
-a {
-  font-family: $font-heading;
-  letter-spacing: 1px;
-  color: $body-color !important;
-}
-
-a {
-  text-underline-offset: 4px !important;
-  display: inline-block;
-  text-decoration: underline !important;
-}
-.container {
-  font-family: $font-body;
-}
-button,
-.btn {
-  font-family: $font-button !important;
-  font-weight: bolder !important;
-  color: $body-color;
-  text-shadow: 0 0 5px #444;
-  letter-spacing: 1px;
-}
