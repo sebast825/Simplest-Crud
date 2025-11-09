@@ -49,7 +49,7 @@ function Register() {
     <>
       <Row className=" flex-grow-1 justify-content-center align-items-center  vw-100 ">
         <Col md={4} className="p-4 border rounded-3 shadow-lg">
-          <h2 className="text-center mb-2 text-primary">Crear Usuario</h2>
+          <h2 className="text-center mb-2 text-secondary">Crear Usuario</h2>
           <Form onSubmit={() => {}} className="d-flex flex-column ">
             <Form.Group controlId="formBasicEmail">
               <Form.Label className="fw-bold"></Form.Label>

@@ -26,7 +26,7 @@ function Login() {
     <>
       <Row className="flex-grow-1 d-flex justify-content-center align-items-center  vw-100 ">
         <Col md={4} className="p-4 border rounded-3 shadow-lg">
-          <h2 className="text-center mb-2 text-primary">Iniciar Sesión</h2>
+          <h2 className="text-center mb-2 text-secondary ">Iniciar Sesión</h2>
           <Form onSubmit={() => {}} className="d-flex flex-column ">
             <Form.Group controlId="formBasicNombre">
               <Form.Label className="fw-bold"></Form.Label>

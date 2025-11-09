@@ -12,14 +12,19 @@ body {
   color: $body-color;
 }
 
-
 h1,
 h2,
 h3,
 a {
   font-family: $font-heading;
   letter-spacing: 1px;
-  color: $body-color!important;
+  color: $body-color !important;
+}
+
+a {
+  text-underline-offset: 4px !important;
+  display: inline-block;
+  text-decoration: underline !important;
 }
 .container {
   font-family: $font-body;
@@ -31,7 +36,4 @@ button,
   color: $body-color;
   text-shadow: 0 0 5px #444;
   letter-spacing: 1px;
-}
-.bg-primary h1 {
-  font-family: $font-heading;
 }
