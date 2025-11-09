@@ -4,12 +4,30 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")}
+
+model tasks {
+  id        Int       @id(map: "PK__tasks__3213E83F61D1F855") @default(autoincrement())
+  title     String    @db.NVarChar(255)
+  done      Boolean?
+  userId    Int?
+  createdAt DateTime? @db.DateTime
+  users     users?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_tasks_users")
+}
+
+model users {
+  id           Int       @id(map: "PK__users__3213E83FAC8B6103") @default(autoincrement())
+  name         String    @db.NVarChar(100)
+  email        String    @db.NVarChar(255)
+  password     String    @db.NVarChar(255)
+  creationDate DateTime? @db.DateTime
+  tasks        tasks[]
 }
