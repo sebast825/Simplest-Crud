@@ -95,6 +95,7 @@ Project/
 │ │ ├─ modals/
 │ │ ├─ pages/
 │ │ ├─ routes/
+│ │ ├─ styles/
 │ │ ├─ types/
 │ │ ├─ App.css
 │ │ ├─ App.tsx
@@ -108,3 +109,5 @@ Project/
 
 ```
 
+## Screenshot Dashboard
+<img width="1664"  alt="image" src="https://github.com/user-attachments/assets/601248c0-36bc-4da7-83ba-d28e76d7b771" />
