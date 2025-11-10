@@ -19,7 +19,7 @@ datasource db {
 model Task  {
   id        Int       @id(map: "PK__tasks__3213E83F61D1F855") @default(autoincrement())
   title     String    @db.NVarChar(255)
-  done      Boolean?
+  done      Boolean   @default(false)
   userId    Int
   createdAt DateTime? @default(now()) @db.DateTime
   user      User @relation(fields: [userId], references: [id])
