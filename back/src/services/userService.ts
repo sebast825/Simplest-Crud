@@ -1,3 +1,4 @@
+import { User } from "@prisma/client";
 import { AuthRequestDto } from "../dto/auth/authRequestDto.types";
 import { UserCreateRequestDto } from "../dto/user/userCreateRequestDto.types";
 import { UserResponseDto } from "../dto/user/userResponseDto.types";
@@ -15,7 +16,7 @@ class UserService {
       }
       var hashPass: string = await hashPassword(userDto.password);
       userDto.password = hashPass;
-      const dbUser: any = await this.userRepository.create(userDto);
+      const dbUser: User = await this.userRepository.create(userDto);
 
       const userResponse: UserResponseDto = {
         name: dbUser.name,
@@ -31,7 +32,7 @@ class UserService {
       throw new CustomError("Missing required fields", 400);
     }
 
-    const dbUser = await this.userRepository.getByEmail(loginDto.email);
+    const dbUser : User | null = await this.userRepository.getByEmail(loginDto.email);
     if (!dbUser) {
       throw new CustomError("Invalid email or password", 401);
     }
