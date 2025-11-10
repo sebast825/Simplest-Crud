@@ -1,3 +1,4 @@
+import { Task } from "@prisma/client";
 import { CustomError } from "../helpers/customError";
 import TaskRepository, { taskRepository } from "../repositories/taskRepository";
 
@@ -25,7 +26,7 @@ class TaskService {
     return await this.taskRepository.delete(taskId);
   }
 
-  public async createTask(title: string, userId: number) {
+  public async createTask(title: string, userId: number) : Promise<Task> {
     if (!userId || !title) {
       throw new CustomError("User Id and title are required", 400);
     }

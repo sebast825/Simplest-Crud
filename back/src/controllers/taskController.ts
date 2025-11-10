@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import TaskService from "../services/taskService";
 import { asyncHandler } from "../helpers/asyncHandler";
+import { Task } from "@prisma/client";
 
 class TaskController {
   constructor(private taskService: TaskService) {}
@@ -37,7 +38,7 @@ class TaskController {
     async (req: Request, res: Response): Promise<void> => {
       const { title } = req.body;
       const userId = (req as any).userId; // comes from the token
-      var createdTask = await this.taskService.createTask(title, userId);
+      var createdTask : Task = await this.taskService.createTask(title, userId);
 
       res.status(201).json(createdTask);
     }

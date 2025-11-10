@@ -1,4 +1,5 @@
-import { connectDB, sql } from "../config/database";
+import { Task } from "@prisma/client";
+import { connectDB, prisma, sql } from "../config/database";
 
 class TaskRepository {
   getAllByUserId = async (userId: string): Promise<any> => {
@@ -16,7 +17,7 @@ class TaskRepository {
 
     const result = await pool
       .request()
-      .input("Id", sql.Int, (taskId))
+      .input("Id", sql.Int, taskId)
       .query("SELECT * FROM tasks WHERE Id = @Id");
 
     return result.recordset[0];
@@ -33,17 +34,15 @@ class TaskRepository {
 
     return result.recordset[0];
   };
-  create = async (title: string, userId: number) => {
-    const pool = await connectDB();
-    const result = await pool
-      .request()
-      .input("title", sql.NVarChar, title)
-      .input("userId", sql.Int, userId)
-      .query(
-        "INSERT INTO tasks (title, done, userId) OUTPUT inserted.* VALUES (@title, 0, @userId)"
-      );
+  create = async (title: string, userId: number): Promise<Task> => {
+    const task: Task = await prisma.task.create({
+      data: {
+        title: title,
+        userId: userId,
+      },
+    });
 
-    return result.recordset[0];
+    return task;
   };
   delete = async (taskId: number) => {
     const pool = await connectDB();
