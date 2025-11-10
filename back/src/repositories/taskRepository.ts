@@ -2,15 +2,15 @@ import { Task } from "@prisma/client";
 import { connectDB, prisma, sql } from "../config/database";
 
 class TaskRepository {
-  getAllByUserId = async (userId: string): Promise<any> => {
-    const pool = await connectDB();
+  getAllByUserId = async (userId: number): Promise<any> => {
 
-    const result = await pool
-      .request()
-      .input("userId", sql.Int, parseInt(userId))
-      .query("SELECT * FROM tasks WHERE userId = @userId");
 
-    return result.recordset;
+    const result =  await prisma.task.findMany({
+      where : {
+        userId : userId
+      }
+    })
+    return result;
   };
   getById = async (taskId: number): Promise<any> => {
     const pool = await connectDB();

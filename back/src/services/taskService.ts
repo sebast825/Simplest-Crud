@@ -4,11 +4,12 @@ import TaskRepository, { taskRepository } from "../repositories/taskRepository";
 
 class TaskService {
   constructor(private taskRepository: TaskRepository) {}
-  public async getTasksByUser(userId: string): Promise<void> {
+  public async getTasksByUser(userId: string): Promise<Task[]> {
     if (!userId) {
       throw new CustomError("Uuser Id is required", 400);
     }
-    const tasks = await this.taskRepository.getAllByUserId(userId);
+
+    const tasks : Task[] = await this.taskRepository.getAllByUserId(parseInt(userId));
     return tasks;
   }
   public async updateTaskStatus(taskId: number, userId: number) {
