@@ -36,7 +36,7 @@ function Login() {
               <Form.Label className="fw-bold"></Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingresar usuario"
+                placeholder="Usuario"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 className="p-2"
@@ -47,7 +47,7 @@ function Login() {
               <Form.Label className=""></Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Ingresar contraseña"
+                placeholder="Contraseña"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className="p-2"

@@ -60,7 +60,7 @@ function Register() {
               <Form.Label className="fw-bold"></Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ingresar email"
+                placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
                 value={email}
                 className="p-2"
@@ -71,7 +71,7 @@ function Register() {
 
               <Form.Control
                 type="text"
-                placeholder="Ingresar nombre de usuario"
+                placeholder="Nombre de usuario"
                 onChange={(e) => setUserName(e.target.value)}
                 value={userName}
                 className="p-2"
@@ -82,7 +82,7 @@ function Register() {
               <Form.Label className=""></Form.Label>
               <Form.Control
                 type="password"
-                placeholder="Ingresar contraseña"
+                placeholder="Contraseña"
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 className="p-2"
