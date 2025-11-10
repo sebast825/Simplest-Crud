@@ -1,30 +1,30 @@
 import { CustomError } from "../helpers/customError";
-import { connectDB, sql } from "../config/database";
+import { connectDB, prisma, sql } from "../config/database";
 import { UserCreateRequestDto } from "../dto/user/userCreateRequestDto.types";
-
+import { User } from "../generated/prisma";
 
 class UserRepository {
-  public async create(userDto: UserCreateRequestDto): Promise<any> {
-    const pool = await connectDB();
-    const checkRequest = pool.request();
-    const checkEmail = await checkRequest
-      .input("email", sql.NVarChar, userDto.email)
-      .query("SELECT id FROM users WHERE email = @email");
+  public async create(userDto: UserCreateRequestDto): Promise<User> {
 
-    if (checkEmail.recordset.length > 0) {
+
+    const checkEmail =   await prisma.user.findUnique({
+      where:{
+        email : userDto.email
+      }
+    })
+
+    if (checkEmail) {
       throw new CustomError("Email already registered", 422);
     }
-    const request = pool.request();
-
-    const result = await request
-      .input("name", sql.NVarChar, userDto.name)
-      .input("email", sql.NVarChar, userDto.email)
-      .input("password", sql.NVarChar, userDto.password).query(`
-         INSERT INTO users (name, email, password) 
-         OUTPUT INSERTED.id, INSERTED.name, INSERTED.email  
-         VALUES (@name, @email, @password);
-      `);
-    return result.recordset[0];
+ 
+    const result =  await prisma.user.create({
+      data :{
+        name : userDto.name,
+        password:userDto.password,
+        email:userDto.email
+      }
+    })
+    return result;
   }
 
   public async getByEmail(email: string): Promise<any> {

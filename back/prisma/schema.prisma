@@ -7,6 +7,8 @@
 
 generator client {
   provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+
 }
 
 datasource db {
@@ -14,20 +16,23 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model tasks {
+model Task  {
   id        Int       @id(map: "PK__tasks__3213E83F61D1F855") @default(autoincrement())
   title     String    @db.NVarChar(255)
   done      Boolean?
-  userId    Int?
-  createdAt DateTime? @db.DateTime
-  users     users?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_tasks_users")
+  userId    Int
+  createdAt DateTime? @default(now()) @db.DateTime
+  user      User @relation(fields: [userId], references: [id])
+
 }
 
-model users {
+model User {
   id           Int       @id(map: "PK__users__3213E83FAC8B6103") @default(autoincrement())
   name         String    @db.NVarChar(100)
-  email        String    @db.NVarChar(255)
+  email        String    @unique @db.NVarChar(255)
   password     String    @db.NVarChar(255)
-  creationDate DateTime? @db.DateTime
-  tasks        tasks[]
+  creationDate DateTime? @default(now()) @db.DateTime
+  tasks        Task[]
+
+
 }
