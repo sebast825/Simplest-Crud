@@ -9,30 +9,40 @@ class TaskService {
       throw new CustomError("Uuser Id is required", 400);
     }
 
-    const tasks : Task[] = await this.taskRepository.getAllByUserId(parseInt(userId));
+    const tasks: Task[] = await this.taskRepository.getAllByUserId(
+      parseInt(userId)
+    );
     return tasks;
   }
-  public async updateTaskStatus(taskId: number, userId: number) : Promise<any>{
+  public async updateTaskStatus(taskId: number, userId: number): Promise<Task> {
     if (!taskId) {
       throw new CustomError("Task Id is required", 400);
     }
     await this.taskBelongsUser(taskId, userId);
-    const taskToUpdate : Task | null = await this.taskRepository.getById(taskId);
-      if (!taskToUpdate) {
+    const taskToUpdate: Task | null = await this.taskRepository.getById(taskId);
+    if (!taskToUpdate) {
       throw new CustomError("Task not found", 404);
     }
 
-    return await this.taskRepository.updateTaskStatus(taskId,!taskToUpdate.done!);
+    return await this.taskRepository.updateTaskStatus(
+      taskId,
+      !taskToUpdate.done!
+    );
   }
   public async deleteTask(taskId: number) {
     if (!taskId) {
       throw new CustomError("Task Id is required", 400);
     }
+    //avoid exception if task doens't exist
+    const taskToDelete: Task | null = await this.taskRepository.getById(taskId);
+    if (!taskToDelete) {
+      throw new CustomError("Task not found", 404);
+    }
 
     return await this.taskRepository.delete(taskId);
   }
 
-  public async createTask(title: string, userId: number) : Promise<Task> {
+  public async createTask(title: string, userId: number): Promise<Task> {
     if (!userId || !title) {
       throw new CustomError("User Id and title are required", 400);
     }
@@ -41,7 +51,7 @@ class TaskService {
   }
 
   private async taskBelongsUser(taskId: number, userId: number) {
-    var taskToUpdate : Task | null = await this.taskRepository.getById(taskId);
+    var taskToUpdate: Task | null = await this.taskRepository.getById(taskId);
     if (!taskToUpdate) {
       throw new CustomError("Task not found", 404);
     }

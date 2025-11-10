@@ -21,7 +21,7 @@ class TaskRepository {
     const result: Task = await prisma.task.update({
       where: { id: taskId },
       data: {
-        done: status
+        done: status,
       },
     });
 
@@ -31,20 +31,14 @@ class TaskRepository {
     const task: Task = await prisma.task.create({
       data: {
         title: title,
-        userId: userId
+        userId: userId,
       },
     });
 
     return task;
   };
-  delete = async (taskId: number) => {
-    const pool = await connectDB();
-    const result = await pool
-      .request()
-      .input("taskId", sql.Int, taskId)
-      .query("DELETE FROM tasks OUTPUT deleted.* WHERE id = @taskId");
-
-    return result.recordset[0];
+  delete = async (taskId: number): Promise<Task> => {
+    return await prisma.task.delete({ where: { id: taskId } });
   };
 }
 

@@ -20,7 +20,7 @@ class TaskController {
       const taskId = parseInt(req.params.taskId, 10);
       const userId = (req as any).userId; // comes from the token
 
-      var updatedTask = await this.taskService.updateTaskStatus(taskId, userId);
+      var updatedTask :Task = await this.taskService.updateTaskStatus(taskId, userId);
 
       res.status(200).json(updatedTask);
     }
