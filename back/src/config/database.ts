@@ -1,5 +1,6 @@
 import sql from "mssql";
 import { ENV } from "./env";
+import { PrismaClient } from "@prisma/client";
 
 const dbConfig = {
   server: ENV.DB_SERVER ?? "localhost",
@@ -22,5 +23,10 @@ const connectDB = async (): Promise<sql.ConnectionPool> => {
   }
   return pool;
 };
+
+export const prisma = new PrismaClient();
+prisma.$connect()
+  .then(() => console.log('Conectado a SQL Server con Prisma'))
+  .catch((err:any) => console.error('Error de conexión Prisma:', err));
 
 export { connectDB, sql };
