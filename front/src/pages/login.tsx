@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Button, Col, Form,  Row } from "react-bootstrap";
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { useAuth } from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
-
 function Login() {
-  const { login, error ,setError} = useAuth();
+  const { login, error, setError } = useAuth();
   const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
@@ -14,18 +13,23 @@ function Login() {
     e.preventDefault();
     await login(email, password);
   }
-    useEffect(() => {
+  useEffect(() => {
     if (error) {
       alert("Usuario o contraseña incorrectos");
     }
     setError(false);
-    
   }, [error]);
 
   return (
     <>
-      <Row className="flex-grow-1 d-flex justify-content-center align-items-center  vw-100 ">
-        <Col md={4} className="p-4 border rounded-3 shadow-lg">
+      <Row className="flex-grow-1 d-flex justify-content-center align-items-center vw-100">
+        <Col
+          xs={11}
+          sm={15}
+          md={6}
+          lg={4}
+          className="m-3 p-4 border rounded-3 shadow-lg "
+        >
           <h2 className="text-center mb-2 text-secondary ">Iniciar Sesión</h2>
           <Form onSubmit={() => {}} className="d-flex flex-column ">
             <Form.Group controlId="formBasicNombre">

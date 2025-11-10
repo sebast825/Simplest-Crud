@@ -17,7 +17,6 @@ function Register() {
     if (!validateUser()) return;
 
     await register(email, password, userName);
-    
   }
 
   function validateUser(): boolean {
@@ -25,7 +24,7 @@ function Register() {
       alert("Las contraseñas no coinciden");
       return false; // retorna false si falla
     }
- if (!password  ) {
+    if (!password) {
       alert("Las contraseñas no pueden estar vacia");
       return false; // retorna false si falla
     }
@@ -48,7 +47,13 @@ function Register() {
   return (
     <>
       <Row className=" flex-grow-1 justify-content-center align-items-center  vw-100 ">
-        <Col md={4} className="p-4 border rounded-3 shadow-lg">
+        <Col
+          xs={11}
+          sm={15}
+          md={6}
+          lg={4}
+          className="p-4 border rounded-3 shadow-lg"
+        >
           <h2 className="text-center mb-2 text-secondary">Crear Usuario</h2>
           <Form onSubmit={() => {}} className="d-flex flex-column ">
             <Form.Group controlId="formBasicEmail">
