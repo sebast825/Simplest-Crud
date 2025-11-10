@@ -12,12 +12,17 @@ class TaskService {
     const tasks : Task[] = await this.taskRepository.getAllByUserId(parseInt(userId));
     return tasks;
   }
-  public async updateTaskStatus(taskId: number, userId: number) {
+  public async updateTaskStatus(taskId: number, userId: number) : Promise<any>{
     if (!taskId) {
       throw new CustomError("Task Id is required", 400);
     }
     await this.taskBelongsUser(taskId, userId);
-    return await this.taskRepository.updateTaskStatus(taskId);
+    const taskToUpdate : Task | null = await this.taskRepository.getById(taskId);
+      if (!taskToUpdate) {
+      throw new CustomError("Task not found", 404);
+    }
+
+    return await this.taskRepository.updateTaskStatus(taskId,!taskToUpdate.done!);
   }
   public async deleteTask(taskId: number) {
     if (!taskId) {

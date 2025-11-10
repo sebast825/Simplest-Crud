@@ -3,39 +3,35 @@ import { connectDB, prisma, sql } from "../config/database";
 
 class TaskRepository {
   getAllByUserId = async (userId: number): Promise<Task[]> => {
-
-    const result : Task[] =  await prisma.task.findMany({
-      where : {
-        userId : userId
-      }
-    })
+    const result: Task[] = await prisma.task.findMany({
+      where: {
+        userId: userId,
+      },
+    });
     return result;
   };
   getById = async (taskId: number): Promise<Task | null> => {
-
-
-    const task : Task | null=    await prisma.task.findUnique({
-      where : {id : taskId}
-    })
+    const task: Task | null = await prisma.task.findUnique({
+      where: { id: taskId },
+    });
     return task;
   };
 
-  updateTaskStatus = async (taskId: number) => {
-    const pool = await connectDB();
-    const result = await pool
-      .request()
-      .input("taskId", sql.Int, taskId)
-      .query(
-        "UPDATE tasks SET done = CASE WHEN done = 1 THEN 0 ELSE 1 END OUTPUT inserted.* WHERE id = @taskId"
-      );
+  updateTaskStatus = async (taskId: number, status: boolean): Promise<Task> => {
+    const result: Task = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        done: status
+      },
+    });
 
-    return result.recordset[0];
+    return result;
   };
   create = async (title: string, userId: number): Promise<Task> => {
     const task: Task = await prisma.task.create({
       data: {
         title: title,
-        userId: userId,
+        userId: userId
       },
     });
 
