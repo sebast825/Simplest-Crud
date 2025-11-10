@@ -1,5 +1,5 @@
 import { Task } from "@prisma/client";
-import { connectDB, prisma, sql } from "../config/database";
+import { prisma } from "../config/database";
 
 class TaskRepository {
   getAllByUserId = async (userId: number): Promise<Task[]> => {

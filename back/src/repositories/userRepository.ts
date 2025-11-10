@@ -1,5 +1,5 @@
 import { CustomError } from "../helpers/customError";
-import { connectDB, prisma, sql } from "../config/database";
+import { prisma} from "../config/database";
 import { UserCreateRequestDto } from "../dto/user/userCreateRequestDto.types";
 import { User } from "../generated/prisma";
 
