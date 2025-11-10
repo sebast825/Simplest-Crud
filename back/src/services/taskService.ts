@@ -36,11 +36,11 @@ class TaskService {
   }
 
   private async taskBelongsUser(taskId: number, userId: number) {
-    var taskToUpdate = await this.taskRepository.getById(taskId);
+    var taskToUpdate : Task | null = await this.taskRepository.getById(taskId);
     if (!taskToUpdate) {
       throw new CustomError("Task not found", 404);
     }
-    if (parseInt(taskToUpdate.userId) != userId) {
+    if (taskToUpdate.userId != userId) {
       throw new CustomError("Unauthorize to edit this task", 401);
     }
   }

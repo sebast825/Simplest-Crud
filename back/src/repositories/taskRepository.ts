@@ -2,25 +2,22 @@ import { Task } from "@prisma/client";
 import { connectDB, prisma, sql } from "../config/database";
 
 class TaskRepository {
-  getAllByUserId = async (userId: number): Promise<any> => {
+  getAllByUserId = async (userId: number): Promise<Task[]> => {
 
-
-    const result =  await prisma.task.findMany({
+    const result : Task[] =  await prisma.task.findMany({
       where : {
         userId : userId
       }
     })
     return result;
   };
-  getById = async (taskId: number): Promise<any> => {
-    const pool = await connectDB();
+  getById = async (taskId: number): Promise<Task | null> => {
 
-    const result = await pool
-      .request()
-      .input("Id", sql.Int, taskId)
-      .query("SELECT * FROM tasks WHERE Id = @Id");
 
-    return result.recordset[0];
+    const task : Task | null=    await prisma.task.findUnique({
+      where : {id : taskId}
+    })
+    return task;
   };
 
   updateTaskStatus = async (taskId: number) => {
