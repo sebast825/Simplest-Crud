@@ -36,7 +36,7 @@ function Dashboard() {
               </Col>
             </Row>
 
-            <ListGroup className="bg-secondary text-darl text-center py-5 rounded-3 mb-4 p-2 gap-2">
+            <ListGroup className="bg-secondary text-darl text-center  px-3 py-4 rounded-3 mb-4 p-2 gap-2">
               {tasks.length == 0 ? (
                 <h3>No tienes tareas!</h3>
               ) : (
