@@ -10,6 +10,10 @@ It allows users to register, log in, and manage tasks through a CRUD protected b
 cd back
 # create .env file with required informaiton follow .env.example
 npm install
+# Generate Prisma client
+npx prisma generate
+# Push schema to database (esto reemplaza tu "Database Backup")
+npx prisma db push
 npm run dev
 
 ## Run the front end
@@ -34,10 +38,10 @@ npm run dev
 ## Technologies
 
 - Frontend: React + TypeScript
-- Backend: Node.js + Express
+- Backend: Node.js + Express + Prisma
 - Database: SQL Server
 - Authentication: JWT
-- Styles: Bootstrap
+- Styles: Bootstrap - Sass - Bootswatch
 
 
 ## API Routes
@@ -49,6 +53,8 @@ npm run dev
 ### Authentication
 - POST `/api/auth/login` - User login
 - POST `/api/auth/register` - User registration
+- POST `/api/auth/logout` - User logout
+
 
 ### Tasks
 - GET `/api/tasks/user` - Get user tasks
@@ -89,6 +95,7 @@ Project/
 │ │ ├─ modals/
 │ │ ├─ pages/
 │ │ ├─ routes/
+│ │ ├─ styles/
 │ │ ├─ types/
 │ │ ├─ App.css
 │ │ ├─ App.tsx
@@ -102,3 +109,5 @@ Project/
 
 ```
 
+## Screenshot Dashboard
+<img width="1664"  alt="image" src="https://github.com/user-attachments/assets/601248c0-36bc-4da7-83ba-d28e76d7b771" />
