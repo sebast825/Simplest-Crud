@@ -4,6 +4,8 @@ This application is a full-stack web system developed with React and TypeScript 
 It allows users to register, log in, and manage tasks through a CRUD protected by JWT token authentication.
 
 ## Run App
+
+### Option 1: Run Locally
 ```bash
 
 ## Run the back end
@@ -21,7 +23,14 @@ cd front
 npm install
 npm run dev
 ```
+### Option 2: Run with Docker
+```bash
+# Start all containers (DB, backend, frontend if configured in docker-compose)
+docker-compose up -d
 
+# Run backend initialization script (create DB, seed data, etc.)
+docker-compose exec back npx ts-node src/database/init-db.ts
+```
 ## Database Backup
 
 - Table creation scripts: `/database/schema.sql`
