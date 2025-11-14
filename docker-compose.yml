@@ -24,7 +24,11 @@ services:
     env_file:
       - ./back/.env 
     environment:
-      - DATABASE_URL=sqlserver://sqlserver:1433;database=myDb;user=sa;password=Your_password123;encrypt=true;trustServerCertificate=true
+      - DATABASE_NAME =my_app_database
+      - DATABASE_USER = sa
+      - DATABASE_PASSWORD = Your_password123
+      - DATABASE_URL=sqlserver://sqlserver:1433;database=my_app_database;user=sa;password=Your_password123;encrypt=true;trustServerCertificate=true
+      
       - JWT_SECRET=my-secure-key
       - EXPIRES_IN=1h
       - JWT_ISSUER=my-app-backend
