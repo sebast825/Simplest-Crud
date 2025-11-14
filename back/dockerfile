@@ -1,0 +1,24 @@
+FROM node:18
+
+WORKDIR /app
+
+# Copiamos package.json primero para aprovechar caché
+COPY package*.json ./
+COPY prisma ./prisma
+
+# Instalamos dependencias
+RUN npm install
+
+# Necesario para que existan los tipos Task y User
+RUN npx prisma generate
+# Copiamos el resto del proyecto
+COPY . .
+
+# Compilamos TypeScript
+RUN npm run build
+
+# Exponemos el puerto que usa tu server
+EXPOSE 3000
+
+# Ejecutamos el servidor compilado
+CMD ["npm", "start"]

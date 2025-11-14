@@ -21,6 +21,6 @@ app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 
 const PORT = 3000;
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
