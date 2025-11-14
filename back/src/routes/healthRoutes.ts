@@ -1,11 +1,11 @@
 import { Request, Response, Router } from 'express';
-const { connectDB } = require('../config/database.ts');
+import { prisma } from '../config/database';
 
 const router = Router();
 
 router.get('/database', async (req: Request, res: Response) => {
   try {
-    const pool = await connectDB();
+    const pool = prisma.$connect()
  
     res.json({ 
       status: 'OK', 
