@@ -23,6 +23,12 @@ services:
       - "3000:3000"
     env_file:
       - ./back/.env 
+    environment:
+      - DATABASE_URL=sqlserver://sqlserver:1433;database=myDb;user=sa;password=Your_password123;encrypt=true;trustServerCertificate=true
+      - JWT_SECRET=my-secure-key
+      - EXPIRES_IN=1h
+      - JWT_ISSUER=my-app-backend
+      - JWT_AUDIENCE=my-app-frontend
     depends_on:
       - sqlserver
     networks:
